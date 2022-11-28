@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.ocr.MainActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#ffffff"
+        android:id="@+id/ImageContainer">
+
+        <ImageView
+            android:id="@+id/imageView"
+            android:layout_width="match_parent"
+            android:layout_height="180dp"
+            android:adjustViewBounds="true"/>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/OCRButtonContainer"
+        android:layout_width="match_parent"
+        android:layout_height="42dp"
+        android:layout_below="@id/ImageContainer"
+        android:layout_centerInParent="true"
+        android:background="#166e78"
+        android:clickable="true">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:gravity="center"
+            android:onClick="runCamera"
+            android:text="RUN OCR"
+            android:textColor="#ffffff"
+            android:textSize="18dp" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/OCRTextContainer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/OCRButtonContainer"
+        android:padding="10dp">
+
+        <TextView
+            android:id="@+id/OCRTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="#fff"
+            android:text="결과"
+            android:textColor="#169cdf"
+            android:textSize="15dp"/>
+    </RelativeLayout>
+</RelativeLayout>
