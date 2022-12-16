@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item
+        android:id="@+id/home"
+        android:enabled="true"
+        android:icon="@drawable/home"
+        android:title="메인"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/rental"
+        android:enabled="true"
+        android:icon="@drawable/rental"
+        android:title="대여"
+        app:showAsAction="always"
+        />
+
+    <item
+        android:id="@+id/ret"
+        android:enabled="true"
+        android:icon="@drawable/ret"
+        android:title="반납"
+        app:showAsAction="always"
+        />
+</menu>
