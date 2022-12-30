@@ -30,6 +30,7 @@ android {
 dependencies {
     implementation 'com.rmtheis:tess-two:9.1.0'//ocr
     implementation 'com.github.dhaval2404:imagepicker:2.1'//카메라, 크롭
+    implementation 'com.google.code.gson:gson:2.8.6'//josn 파싱
 
     implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'

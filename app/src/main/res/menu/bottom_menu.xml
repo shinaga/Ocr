@@ -8,6 +8,7 @@
         android:title="메인"
         app:showAsAction="always"
         />
+        />
 
     <item
         android:id="@+id/rental"

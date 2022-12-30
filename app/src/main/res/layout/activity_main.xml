@@ -5,6 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".MainActivity">
+    <include
+        android:id="@+id/toolbar"
+        layout="@layout/toolbar_main"/>
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -23,9 +26,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:itemBackground="@color/white"
-        app:labelVisibilityMode="labeled"
+        app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        app:itemIconTint="@drawable/bottom_icon_color"
         app:menu="@menu/bottom_menu" />
 </androidx.constraintlayout.widget.ConstraintLayout>
