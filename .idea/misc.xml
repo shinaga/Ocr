@@ -3,6 +3,12 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
+        <entry key="..\:/AndroidProject/Ocr/app/src/main/res/drawable/border_purple.xml" value="0.196" />
+        <entry key="..\:/AndroidProject/Ocr/app/src/main/res/drawable/bottom_icon_color.xml" value="0.196" />
+        <entry key="..\:/AndroidProject/Ocr/app/src/main/res/layout/equipment_recyclerview.xml" value="0.358695652173913" />
+        <entry key="..\:/AndroidProject/Ocr/app/src/main/res/layout/fragment_home.xml" value="0.17806484295845998" />
+        <entry key="..\:/AndroidProject/Ocr/app/src/main/res/layout/fragment_rental.xml" value="0.36614583333333334" />
+        <entry key="..\:/AndroidProject/Ocr/app/src/main/res/layout/my_equipment_recyclerview.xml" value="0.358695652173913" />
         <entry key="..\:/Users/shina/AndroidStudioProjects/Ocr/app/src/main/res/drawable/bottom_icon_color.xml" value="0.1125" />
         <entry key="..\:/Users/shina/AndroidStudioProjects/Ocr/app/src/main/res/drawable/edit_search.xml" value="0.179" />
         <entry key="..\:/Users/shina/AndroidStudioProjects/Ocr/app/src/main/res/drawable/round_image.xml" value="0.179" />

@@ -6,16 +6,26 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.ViewHolder>{
+import org.w3c.dom.Text;
 
+import java.util.ArrayList;
+
+public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.ViewHolder>{
+    private ArrayList<Equipment> equipmentList;
+
+    public void setEquipmentList(ArrayList<Equipment> equipmentList) {
+        this.equipmentList = equipmentList;
+        notifyDataSetChanged();
+    }
     @Override
     public int getItemCount() {
-        return 10;
+        return equipmentList.size();
     }
 
     @NonNull
@@ -25,9 +35,12 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.View
         return new EquipmentAdapter.ViewHolder(view);
     }
 
+
+
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         LinearLayout linear;
+        TextView text_name,text_posible,text_code,text_number;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.image);
@@ -40,15 +53,22 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.View
                     linear.setVisibility(View.GONE);
                 }
             });
-
+            text_name = itemView.findViewById(R.id.text_name);
+            text_posible = itemView.findViewById(R.id.text_posible);
+            text_code = itemView.findViewById(R.id.text_code);
+            text_number = itemView.findViewById(R.id.text_number);
         }
         void onBind(Equipment item) {
             image.setClipToOutline(true);//이게 없으면 둥글게 안나옴
+            text_name.setText(item.name+"");
+            text_posible.setText(item.rental+"");
+            text_code.setText(item.code+"");
+            text_number.setText(item.number+"");
         }
     }
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.onBind(new Equipment());
+        holder.onBind(equipmentList.get(position));
     }
 
 }

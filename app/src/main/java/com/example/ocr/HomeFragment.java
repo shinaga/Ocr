@@ -12,6 +12,7 @@ import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -32,7 +33,7 @@ public class HomeFragment extends Fragment {
 
     private RecyclerView recyclerView;
     private ArrayList<Equipment> equipmentList;//리사이클러뷰에 넣어줄 기자재 리스트
-    private MyEquipmentAdapter recyclerAdapter;
+    private EquipmentAdapter recyclerAdapter;
 
     public HomeFragment(Context context) {
         this.context = context;
@@ -71,16 +72,25 @@ public class HomeFragment extends Fragment {
                     String jsonData = buffer.toString();
 
                     JSONObject obj = new JSONObject(jsonData);// jsonData를 먼저 JSONObject 형태로 바꾼다.
-                    //JSONObject result = (JSONObject)obj.get("result");// obj의 "result"의 JSONObject를 추출
-                    JSONArray result = (JSONArray)obj.getJSONArray("result");// boxOfficeResult의 JSONObject에서 "dailyBoxOfficeList"의 JSONArray 추출
+                    JSONArray result = obj.getJSONArray("result");// boxOfficeResult의 JSONObject에서 "dailyBoxOfficeList"의 JSONArray 추출
 
                     getActivity().runOnUiThread(new Runnable() {//getActivity().을 붙여야 fragment에서 runOnUiThread가 작동함
                         @Override
                         public void run() {
+                            TextView text_count = view.findViewById(R.id.text_count);
+                            text_count.setText("기자재 목록("+result.length()+"개)");
                             for(int i=0;i<result.length();i++){
-                                Equipment equipment = new Equipment();
-                                equipment.code=123;
-                                equipmentList.add(equipment);
+                                try {
+                                    JSONObject tool_state = result.getJSONObject(i);// result의 "i 번째"의 JSONObject를 추출
+                                    Equipment equipment = new Equipment();
+                                    equipment.name = tool_state.getString("tool_name");
+                                    equipment.rental=tool_state.getString("tool_state");
+                                    equipment.code=tool_state.getString("tool_id");
+                                    equipment.number=tool_state.getString("tool_use_division");
+                                    equipmentList.add(equipment);
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
                             }
                             recyclerAdapter.setEquipmentList(equipmentList);//RecyclerView에 noticeList를 연결한다.
                             recyclerAdapter.notifyDataSetChanged();
@@ -103,7 +113,7 @@ public class HomeFragment extends Fragment {
 
         recyclerView = view.findViewById(R.id.recyclerView);//layout에서 찾기
         /* initiate adapter */
-        recyclerAdapter = new MyEquipmentAdapter();//어댑터 대입
+        recyclerAdapter = new EquipmentAdapter();//어댑터 대입
 
         /* initiate recyclerview */
         recyclerView.setAdapter(recyclerAdapter);//어댑터 연결
