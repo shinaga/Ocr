@@ -21,6 +21,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -28,10 +29,17 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 
+import com.google.zxing.integration.android.IntentIntegrator;
+import com.google.zxing.integration.android.IntentResult;
+
 import java.io.File;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
 
 public class RentalFragment extends Fragment {
     ImageView img_camera;
@@ -40,6 +48,8 @@ public class RentalFragment extends Fragment {
     Uri photoUri;
     String imageFilePath;
 
+    Retrofiyclient retrofiyclient;
+    Inter inter;
     public RentalFragment(Context context) {
         this.context = context;
     }
@@ -61,7 +71,10 @@ public class RentalFragment extends Fragment {
 
         authority();
         img_camera = view.findViewById(R.id.img_camera);
-        img_camera.setOnClickListener(v -> {// 카메라촬영 클릭 이벤트
+        img_camera.setOnClickListener(v -> {
+            new IntentIntegrator(getActivity()).initiateScan();
+        });
+        /*img_camera.setOnClickListener(v -> {// 카메라촬영 클릭 이벤트
             // 카메라 기능을 Intent
             Intent i = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
@@ -74,9 +87,9 @@ public class RentalFragment extends Fragment {
                 photoUri = FileProvider.getUriForFile(context, getActivity().getPackageName() + ".fileprovider", photoFile);
                 i.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
 
-                startActivityForResult(i, 0);
+                startActivityForResult(i, 1);
             }
-        });
+        });*/
         return view;
     }
     private void authority(){
@@ -95,7 +108,7 @@ public class RentalFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // 카메라 촬영을 하면 이미지뷰에 사진 삽입
-        if (requestCode == 0 && resultCode == Activity.RESULT_OK) {
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
             // 이미지파일을 bitmap 변수에 초기화
             Bitmap bitmap = BitmapFactory.decodeFile(imageFilePath);
             ExifInterface exif = null;

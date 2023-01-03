@@ -31,8 +31,12 @@ dependencies {
     implementation 'com.rmtheis:tess-two:9.1.0'//ocr
     implementation 'com.github.dhaval2404:imagepicker:2.1'//카메라, 크롭
     implementation 'com.google.code.gson:gson:2.8.6'//josn 파싱
+    implementation 'com.journeyapps:zxing-android-embedded:4.3.0'//QR
+    //레트로핏
+    implementation 'com.squareup.retrofit2:converter-gson:2.6.2'
+    implementation 'com.squareup.retrofit2:retrofit:2.6.2'
+    implementation 'com.google.code.gson:gson:2.8.5'
 
-    implementation 'androidx.appcompat:appcompat:1.5.1'
     implementation 'com.google.android.material:material:1.7.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
     testImplementation 'junit:junit:4.13.2'
