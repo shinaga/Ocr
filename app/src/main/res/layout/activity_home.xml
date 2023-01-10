@@ -17,7 +17,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintBottom_toTopOf="@+id/bottom_navigationview"
         android:id="@+id/containers">
-
     </FrameLayout>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

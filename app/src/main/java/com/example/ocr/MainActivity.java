@@ -27,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText userid, userpw;
     private Button login;
     private TextView idfind, pwfind;
+    static String token;
 
 
     RetrofitClient retrofitClient;
@@ -91,7 +92,6 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 다시 한번 확인해주세요!", Toast.LENGTH_LONG).show();
 
                 }else {
-
                     loginAPI.getLogin(loginDTO).enqueue(new Callback<LoginResponse>() {
                         @Override
                         public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
@@ -99,7 +99,11 @@ public class MainActivity extends AppCompatActivity {
                             if(response.isSuccessful()){
                                 Toast.makeText(getApplicationContext(), "통신성공", Toast.LENGTH_LONG).show();
                                 String result = response.body().toToken();
-                                Log.e("test32", response.body().toToken());
+                                token=result.substring(13,result.length()-1);
+
+                                Log.e("test32",  token);
+                                Intent intent = new Intent(MainActivity.this,HomeActivity.class);
+                                startActivity(intent);
 
                             }else {
                                 Toast.makeText(getApplicationContext(), "통신오류", Toast.LENGTH_LONG).show();

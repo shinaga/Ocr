@@ -80,7 +80,7 @@ public class HomeFragment extends Fragment {
                      connection.setDoInput(true);                // 읽기모드 지정
                      connection.setUseCaches(false);             // 캐싱데이터를 받을지 안받을지
                      connection.setConnectTimeout(15000);        // 통신 타임아웃a
-                     connection.setRequestProperty("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoic3NzIiwidXNlcl9saWNlbnNlIjozLCJleHAiOjE2NzMyMTk5NDUsImlhdCI6MTY3MzE5ODM0NSwiaXNzIjoiYWVsaW1pIn0.o24KC-1fTwGPMF0vMW-XojXAoyu1cBs6kb2Ea6woceQ");
+                     connection.setRequestProperty("token", MainActivity.token);
                      Log.e("TAG", "11");
                      int responseCode = connection.getResponseCode();
 
@@ -139,7 +139,7 @@ public class HomeFragment extends Fragment {
                             recyclerAdapter.setEquipmentList(equipmentList);//RecyclerView에 noticeList를 연결한다.
                             recyclerAdapter.notifyDataSetChanged();
                         }
-                    });
+                     });
 
                 } catch (MalformedURLException e) {
                     e.printStackTrace();

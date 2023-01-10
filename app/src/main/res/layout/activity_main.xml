@@ -27,14 +27,13 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="12dp"
-
+        android:text="sss"
         android:background="@drawable/loginbackgrounddrawable"
         android:hint="아이디를 입력하시오"
         android:paddingHorizontal="10dp"
         android:paddingVertical="8dp"
         app:layout_constraintBottom_toTopOf="@+id/userpw"
         tools:layout_editor_absoluteX="9dp" />
-
     <EditText
         android:inputType="textPassword"
         android:id="@+id/userpw"
@@ -42,6 +41,7 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="28dp"
+        android:text="1234"
         android:background="@drawable/loginbackgrounddrawable"
         android:hint="비밀번호를 입력하시오"
         android:paddingHorizontal="5dp"

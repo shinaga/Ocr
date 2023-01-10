@@ -320,14 +320,15 @@ public class RentalFragment extends Fragment {
         OCRresult = mTess.getUTF8Text();
 
         String pattern = "^[0-9]*$"; // 숫자만 등장하는지 확인하는 정규표현식
-        String result = "사진을 다시 촬영해 주세요.";//촬영이 안되면 이 문자열이 출력됨
-        for(int i=0;i<OCRresult.length()-13;i++){
-            if(Pattern.matches(pattern, OCRresult.substring(i,i+13))){//문자열이 13연속으로 숫자로 이어지는지 판단
-                result = OCRresult.substring(i,i+13);
+                String result = "사진을 다시 촬영해 주세요.";//촬영이 안되면 이 문자열이 출력됨
+                for(int i=0;i<OCRresult.length()-13;i++){
+                    if(Pattern.matches(pattern, OCRresult.substring(i,i+13))){//문자열이 13연속으로 숫자로 이어지는지 판단
+                        result = OCRresult.substring(i,i+13);
                 break;//for문을 빠져나온다.
             }
         }
-        Toast.makeText(context,result,Toast.LENGTH_SHORT).show();
+        TextView t = view.findViewById(R.id.text_posible);
+        t.setText(result);
         loadEquipment();//기자재 검색
     }
 }

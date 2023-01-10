@@ -4,6 +4,7 @@ import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -42,6 +43,8 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.View
         ImageView image;
         LinearLayout linear;
         TextView text_name,text_posible,text_code,text_number,text_day;
+        Button btn_repair;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.image);
@@ -62,6 +65,11 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.View
             text_code = itemView.findViewById(R.id.text_code);
             text_number = itemView.findViewById(R.id.text_number);
             text_day = itemView.findViewById(R.id.text_day);
+
+            btn_repair = itemView.findViewById(R.id.btn_repair);
+            btn_repair.setOnClickListener(v -> {
+                LoanFragment.setGone();
+            });
         }
         void onBind(Equipment item) {
             image.setClipToOutline(true);//이게 없으면 둥글게 안나옴

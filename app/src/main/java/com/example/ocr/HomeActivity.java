@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.google.android.material.navigation.NavigationBarView;
@@ -81,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
                     @Override
                     public void onResponse(Call<Res> call, Response<Res> response) {
                         if(response.isSuccessful() && response.body() != null){
-                            Toast.makeText(getApplicationContext(), "성공", Toast.LENGTH_LONG).show();
+                            Toast.makeText(getApplicationContext(),"성공", Toast.LENGTH_LONG).show();
                             Log.d("respose", String.valueOf(response));
 
                         }
