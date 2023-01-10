@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/loginbackground"
+    tools:context=".Register4">
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="로고"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/userid"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.429"
+        tools:layout_editor_absoluteX="0dp" />
+
+
+
+
+    <EditText
+        android:id="@+id/userid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="12dp"
+
+        android:background="@drawable/loginbackgrounddrawable"
+        android:hint="아이디"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/userpw"
+        tools:layout_editor_absoluteX="9dp" />
+
+    <EditText
+
+        android:id="@+id/userpw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/loginbackgrounddrawable"
+        android:hint="비밀번호"
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_register_next"
+        tools:layout_editor_absoluteX="10dp" />
+
+
+
+    <Button
+        android:id="@+id/btn_register_next"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="156dp"
+        android:background="@drawable/loginbackgrounddrawablebutton"
+        android:fontFamily="@font/notosanskrbold"
+        android:text="다음"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="20dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

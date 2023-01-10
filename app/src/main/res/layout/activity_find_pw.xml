@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/loginbackground"
+    tools:context=".FindPW">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="로고"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/useremail"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.429"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <TextView
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="비밀번호 찾기"
+        app:layout_constraintBottom_toTopOf="@+id/useremail"
+        app:layout_constraintTop_toBottomOf="@+id/textView"
+        app:layout_constraintVertical_bias="0.057"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+
+        android:id="@+id/useremail"
+        android:layout_width="250dp"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/loginbackgrounddrawable"
+        android:hint="이메일을 입력하시오."
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/emailnum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <Button
+        android:id="@+id/emailcertifiedbtn"
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/loginbackgrounddrawablebuttonemail"
+        android:text="인증"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toTopOf="@+id/emailnum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.396"
+        app:layout_constraintStart_toEndOf="@+id/useremail" />
+
+    <EditText
+
+        android:id="@+id/emailnum"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/loginbackgrounddrawable"
+        android:hint="인증번호."
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_idfind"
+        tools:layout_editor_absoluteX="10dp" />
+
+    <Button
+        android:id="@+id/btn_idfind"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="156dp"
+        android:background="@drawable/loginbackgrounddrawablebutton"
+        android:fontFamily="@font/notosanskrbold"
+        android:text="다음"
+        android:textColor="#ffffff"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        tools:layout_editor_absoluteX="20dp" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

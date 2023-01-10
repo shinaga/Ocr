@@ -4,30 +4,96 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/loginbackground"
     tools:context=".MainActivity">
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar_main"/>
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@+id/bottom_navigationview"
-        android:id="@+id/containers">
 
-    </FrameLayout>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
-        android:id="@+id/bottom_navigationview"
+    <TextView
+        android:id="@+id/textView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        app:itemBackground="@color/white"
-        app:labelVisibilityMode="unlabeled"
+        android:layout_gravity="center"
+        android:gravity="center"
+        android:text="로고"
+        android:textSize="30sp"
+        app:layout_constraintBottom_toTopOf="@+id/userid"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.429"
+        tools:layout_editor_absoluteX="0dp" />
+
+    <EditText
+        android:id="@+id/userid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="12dp"
+
+        android:background="@drawable/loginbackgrounddrawable"
+        android:hint="아이디를 입력하시오"
+        android:paddingHorizontal="10dp"
+        android:paddingVertical="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/userpw"
+        tools:layout_editor_absoluteX="9dp" />
+
+    <EditText
+        android:inputType="textPassword"
+        android:id="@+id/userpw"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="28dp"
+        android:background="@drawable/loginbackgrounddrawable"
+        android:hint="비밀번호를 입력하시오"
+        android:paddingHorizontal="5dp"
+        android:paddingVertical="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/btn_loginpage_login"
+        tools:layout_editor_absoluteX="10dp" />
+
+    <Button
+        android:id="@+id/btn_loginpage_login"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="20dp"
+        android:layout_marginBottom="156dp"
+        android:background="@drawable/loginbackgrounddrawablebutton"
+        android:fontFamily="@font/notosanskrbold"
+        android:text="다음"
+        android:textColor="#ffffff"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:itemIconTint="@drawable/bottom_icon_color"
-        app:menu="@menu/bottom_menu" />
+        tools:layout_editor_absoluteX="20dp" />
+
+    <TextView
+        android:id="@+id/tv_loginpage_findid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:text="아이디 찾기"
+        android:textColor="#ffffff"
+        app:layout_constraintEnd_toStartOf="@+id/tv_loginpage_findpw"
+        app:layout_constraintHorizontal_bias="0.483"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_loginpage_login" />
+
+    <TextView
+        android:id="@+id/tv_loginpage_findpw"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="56dp"
+        android:text="비밀번호 찾기"
+        android:textColor="#ffffff"
+        app:layout_constraintEnd_toStartOf="@+id/tv_loginpage_register"
+        app:layout_constraintTop_toBottomOf="@+id/btn_loginpage_login" />
+
+    <TextView
+        android:id="@+id/tv_loginpage_register"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="48dp"
+        android:text="회원가입"
+        android:textColor="#ffffff"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/btn_loginpage_login" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,8 +17,11 @@ import org.w3c.dom.Text;
 import java.util.ArrayList;
 
 public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.ViewHolder>{
-    private ArrayList<Equipment> equipmentList;
-
+    private ArrayList<Equipment> equipmentList = new ArrayList<>();
+    int i;//어디서 부른 리사이클러뷰인지 식별하기 위한 숫자
+    EquipmentAdapter(int i){
+        this.i = i;
+    }
     public void setEquipmentList(ArrayList<Equipment> equipmentList) {
         this.equipmentList = equipmentList;
         notifyDataSetChanged();
@@ -35,35 +38,54 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.View
         return new EquipmentAdapter.ViewHolder(view);
     }
 
-
-
     class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         LinearLayout linear;
-        TextView text_name,text_posible,text_code,text_number;
+        TextView text_name,text_posible,text_code,text_number,text_day;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             image = itemView.findViewById(R.id.image);
 
-            linear = itemView.findViewById(R.id.linear);
+            if(i==1) linear = itemView.findViewById(R.id.linear1);
+            else if(i==2) linear = itemView.findViewById(R.id.linear2);
             itemView.setOnClickListener(v -> {//안에 내용물이 열려있는지 아닌지 확인
-                if(linear.getVisibility()==View.GONE){
-                    linear.setVisibility(View.VISIBLE);
-                }else {
-                    linear.setVisibility(View.GONE);
+                if(linear!=null) {//linear가 지정이 안되어 있을 수도 있음
+                    if(linear.getVisibility() == View.GONE) {
+                        linear.setVisibility(View.VISIBLE);
+                    } else{
+                        linear.setVisibility(View.GONE);
+                    }
                 }
             });
             text_name = itemView.findViewById(R.id.text_name);
             text_posible = itemView.findViewById(R.id.text_posible);
             text_code = itemView.findViewById(R.id.text_code);
             text_number = itemView.findViewById(R.id.text_number);
+            text_day = itemView.findViewById(R.id.text_day);
         }
         void onBind(Equipment item) {
             image.setClipToOutline(true);//이게 없으면 둥글게 안나옴
-            text_name.setText(item.name+"");
-            text_posible.setText(item.rental+"");
-            text_code.setText(item.code+"");
-            text_number.setText(item.number+"");
+
+            if(item.name!=null){
+                text_name.setText(item.name+"");
+                text_name.setVisibility(View.VISIBLE);
+            }
+            if(item.rental!=null){
+                text_posible.setText(item.rental+"");
+                text_posible.setVisibility(View.VISIBLE);
+            }
+            if(item.code!=null){
+                text_code.setText(item.code+"");
+                text_code.setVisibility(View.VISIBLE);
+            }
+            if(item.number!=null){
+                text_number.setText(item.number+"");
+                text_number.setVisibility(View.VISIBLE);
+            }
+            if(item.number!=null){
+                text_number.setText(item.day+"");
+                text_number.setVisibility(View.VISIBLE);
+            }
         }
     }
     @Override

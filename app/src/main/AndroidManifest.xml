@@ -7,10 +7,9 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> <!-- 저장소 읽기 권한 -->
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAG" /> <!-- 저장소 쓰기 권한 -->
     <uses-feature android:name="android.hardware.camera2" />
-
     <uses-feature
         android:name="android.hardware.Camera"
-        android:required="true"/>
+        android:required="true" />
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -26,16 +25,59 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".manageRst3"
+            android:exported="false"/>
+        <activity
+            android:name=".manageRst2"
+            android:exported="false"/>
+        <activity
+            android:name=".manageRst1"
+            android:exported="false"/>
+        <activity
             android:name=".ProfileActivity"
             android:exported="false" />
         <activity
             android:name=".JsonActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".OcrActivity"
-            android:exported="false" />
+            android:exported="false"/>
         <activity
             android:name=".MainActivity"
+            android:exported="false"/>
+        <activity
+            android:name=".FindPWnext"
+            android:exported="false" />
+        <activity
+            android:name=".FindPW"
+            android:exported="false" />
+        <activity
+            android:name=".PWfind"
+            android:exported="false" />
+        <activity
+            android:name=".IDfind"
+            android:exported="false" />
+        <activity
+            android:name=".enterpriseRst2"
+            android:exported="false" />
+        <activity
+            android:name=".enterpriseRst1"
+            android:exported="false" />
+        <activity
+            android:name=".Register4"
+            android:exported="false" />
+        <activity
+            android:name=".Register3"
+            android:exported="false" />
+        <activity
+            android:name=".Register2"
+            android:exported="false" />
+        <activity
+            android:name=".Register"
+            android:exported="false" />
+        <activity android:name=".enterpriseRst3" />
+        <activity
+            android:name=".HomeActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -43,11 +85,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <provider android:name="androidx.core.content.FileProvider"
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
             android:authorities="com.example.ocr.fileprovider"
             android:exported="false"
             android:grantUriPermissions="true">
-            <meta-data android:name="android.support.FILE_PROVIDER_PATHS"
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
                 android:resource="@xml/file_paths" />
         </provider>
     </application>
