@@ -41,6 +41,7 @@ import com.googlecode.tesseract.android.TessBaseAPI;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -64,6 +65,8 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RentalFragment extends Fragment {
+    static TextView text_name;
+    static String name;
     ImageView img_camera, imageView;
     private TessBaseAPI mTess; //Tess API reference
     String datapath = "" ; //언어데이터가 있는 경로
@@ -74,7 +77,6 @@ public class RentalFragment extends Fragment {
     static TextView ocr;
     Retrofiyclient retrofiyclient;
     Inter inter;
-    static String tool_id;//tool id로 조회
     static LinearLayout linearLayout;
 
     public RentalFragment(Context context) {
@@ -123,8 +125,7 @@ public class RentalFragment extends Fragment {
         });
         return view;
     }
-   static void loadEquipment() {
-
+    static void loadEquipment(String tool_id) {
        linearLayout.setVisibility(View.GONE);
        Toast.makeText(linearLayout.getContext(), "asdf",Toast.LENGTH_SHORT).show();
 
@@ -145,8 +146,8 @@ public class RentalFragment extends Fragment {
                     //connection.setRequestProperty("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoic3NzIiwidXNlcl9saWNlbnNlIjozLCJleHAiOjE2NzMyMTk5NDUsImlhdCI6MTY3MzE5ODM0NSwiaXNzIjoiYWVsaW1pIn0.o24KC-1fTwGPMF0vMW-XojXAoyu1cBs6kb2Ea6woceQ");
 
                     JSONObject body = new JSONObject();
-                    body.put("tool_id", "test1");
-                    body.put("user_id", "sss");
+                    body.put("tool_id", /*원래는 tool_id로 해야함*/"test1");
+                    body.put("user_id", MainActivity.userid.getText().toString());
                     body.put("department_id", "1");
 
                     BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
@@ -183,7 +184,64 @@ public class RentalFragment extends Fragment {
                 }
             }
         }.start();
+        /*if 대여 버튼을 누르면*/rental();//대여
+    }
+    static void rental(){
+        new Thread(){
+            @Override
+            public void run() {
+                try {
 
+                    StringBuffer response = new StringBuffer();//여기에 json을 문자열로 받아올것임
+                    URL url = new URL("http://120.142.105.189:5080/rental/rentalTool");
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestProperty("content-type", "application/json");
+                    connection.setRequestProperty("Accept", " application/json"); // api 리턴값을 json으로 받을 경우!
+                    connection.setRequestMethod("POST");         // 통신방식
+                    connection.setDoInput(true);                // 읽기모드 지정
+                    connection.setUseCaches(false);             // 캐싱데이터를 받을지 안받을지
+                    connection.setConnectTimeout(15000);        // 통신 타임아웃a
+                    //connection.setRequestProperty("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoic3NzIiwidXNlcl9saWNlbnNlIjozLCJleHAiOjE2NzMyMTk5NDUsImlhdCI6MTY3MzE5ODM0NSwiaXNzIjoiYWVsaW1pIn0.o24KC-1fTwGPMF0vMW-XojXAoyu1cBs6kb2Ea6woceQ");
+
+                    JSONObject body = new JSONObject();
+                    body.put("tool_id", /*원래는 tool_id로 해야함*/"test1");
+                    body.put("user_id", MainActivity.userid.getText().toString());
+                    body.put("department_id", "1");
+
+                    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
+                    bw.write(body.toString());
+                    bw.flush();
+                    bw.close();
+
+                    int responseCode = connection.getResponseCode();
+
+                    if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED) {
+                        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                        String inputLine;
+                        response = new StringBuffer();
+                        while ((inputLine = in.readLine()) != null) {
+                            response.append(inputLine);
+                        }
+                        in.close();
+
+                    } else {
+                        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+                        String inputLine;
+                        response = new StringBuffer();
+                        while ((inputLine = in.readLine()) != null) {
+                            response.append(inputLine);
+                        }
+                        in.close();
+                    }
+
+                    JSONObject obj = new JSONObject(response.toString());// jsonData를 먼저 JSONObject 형태로 바꾼다.
+                    boolean suc = obj.getBoolean("suc");// boxOfficeResult의 JSONObject에서 "dailyBoxOfficeList"의 JSONArray 추출
+
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
     }
     private void authority(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -327,8 +385,6 @@ public class RentalFragment extends Fragment {
                 break;//for문을 빠져나온다.
             }
         }
-        TextView t = view.findViewById(R.id.text_posible);
-        t.setText(result);
-        loadEquipment();//기자재 검색
+        loadEquipment(result);
     }
 }

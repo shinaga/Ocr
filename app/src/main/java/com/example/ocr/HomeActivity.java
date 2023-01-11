@@ -71,8 +71,7 @@ public class HomeActivity extends AppCompatActivity {
 
                 Toast.makeText(getApplicationContext(), "스캔~" + result.getContents(), Toast.LENGTH_LONG).show();
                 String datas = "대여가능";
-                RentalFragment.tool_id="20"+result.getContents();
-                RentalFragment.loadEquipment();
+                RentalFragment.loadEquipment("20"+result.getContents());
 
                 Req req = new Req(result.getContents(),datas);
                 retrofiyclient = Retrofiyclient.getInstance();

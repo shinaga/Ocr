@@ -29,8 +29,7 @@ import java.util.ArrayList;
 public class LoanFragment extends Fragment {
     Context context;
     View view;
-    ImageView img_profile;
-    static ConstraintLayout constraint1,constraint2;
+
     private RecyclerView recyclerView;
     private ArrayList<Equipment> equipmentList;//리사이클러뷰에 넣어줄 기자재 리스트
     private EquipmentAdapter recyclerAdapter;
@@ -43,20 +42,10 @@ public class LoanFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_loan, container, false);
-        img_profile = view.findViewById(R.id.img_profile);
-        img_profile.setImageDrawable(getResources().getDrawable(R.drawable.camera));
-
-        constraint1 = view.findViewById(R.id.constraint1);
-        constraint2 = view.findViewById(R.id.constraint2);
 
         recyclerViewSet(2);//RecyclerView 세팅한다.
         loadEquipment();//서버에서 기자재 목록 불러오기
         return view;
-    }
-    public static void setGone() {
-        constraint1.setVisibility(View.GONE);
-        constraint2.setVisibility(View.VISIBLE);
-
     }
     private void recyclerViewSet(int i) {
         equipmentList = new ArrayList<Equipment>();//ArrayList 생성

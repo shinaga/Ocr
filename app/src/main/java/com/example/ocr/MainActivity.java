@@ -24,7 +24,7 @@ import retrofit2.Response;
 public class MainActivity extends AppCompatActivity {
 
     private TextView tv_register;
-    private EditText userid, userpw;
+    static EditText userid, userpw;
     private Button login;
     private TextView idfind, pwfind;
     static String token;

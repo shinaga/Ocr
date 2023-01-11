@@ -1,5 +1,6 @@
 package com.example.ocr;
 
+import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -68,7 +69,8 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.View
 
             btn_repair = itemView.findViewById(R.id.btn_repair);
             btn_repair.setOnClickListener(v -> {
-                LoanFragment.setGone();
+                Intent intent = new Intent(v.getContext(),RepairActivity.class);
+                v.getContext().startActivity(intent);
             });
         }
         void onBind(Equipment item) {
