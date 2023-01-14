@@ -29,9 +29,10 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="12dp"
-                    android:layout_marginTop="56dp"
+                    android:layout_marginTop="8dp"
                     android:textColor="#000000"
                     android:textStyle="bold"
+                    android:text=""
                     app:layout_constraintStart_toEndOf="@+id/image"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -97,15 +98,32 @@
                             android:layout_marginTop="2dp"
                             android:textSize="10dp" />
                 </LinearLayout>
-
-                <View
+                <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginLeft="8dp"
-                    android:layout_marginTop="8dp"
-                    android:layout_marginRight="8dp"
-                    android:background="#C6C2D1"
-                    app:layout_constraintTop_toBottomOf="@id/linear" />
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="80dp"
+                    android:orientation="horizontal"
+                    android:gravity="right"
+                    app:layout_constraintTop_toBottomOf="@+id/text_number">
+                        <Button
+                            android:id="@+id/btn_repair"
+                            android:layout_width="80dp"
+                            android:layout_height="32dp"
+                            android:backgroundTint="#9785CB"
+                            android:text="수리 요청"
+                            android:textColor="#ffffff"
+                            android:textSize="10dp"/>
+                        <Button
+                            android:id="@+id/btn_rental"
+                            android:layout_width="80dp"
+                            android:layout_height="32dp"
+                            android:backgroundTint="#9785CB"
+                            android:layout_marginStart="16dp"
+                            android:layout_marginEnd="16dp"
+                            android:text="대여 하기"
+                            android:textColor="#ffffff"
+                            android:textSize="10dp"/>
+                </LinearLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
         <LinearLayout
             android:id="@+id/linearLayout"

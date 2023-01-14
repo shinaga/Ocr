@@ -124,9 +124,9 @@ public class LoanFragment extends Fragment {
                                     JSONObject tool = result.getJSONObject(i);// result의 "i 번째"의 JSONObject를 추출
                                     Equipment equipment = new Equipment();
                                     equipment.name = tool.getString("tool_name");
-                                    equipment.rental=tool.getString("tool_state");
-                                    equipment.code="품목 코드 :   "+tool.getString("tool_use_division");
-                                    equipment.number="자산 번호 :   "+tool.getString("tool_id");
+                                    equipment.rental = tool.getString("tool_state");
+                                    equipment.code= tool.getString("tool_use_division");
+                                    equipment.number = tool.getString("tool_id");
                                     equipmentList.add(equipment);
                                 } catch (JSONException e) {
                                     e.printStackTrace();

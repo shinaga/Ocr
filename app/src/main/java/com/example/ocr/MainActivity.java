@@ -41,7 +41,6 @@ public class MainActivity extends AppCompatActivity {
         idfind = findViewById(R.id.tv_loginpage_findid);
         pwfind = findViewById(R.id.tv_loginpage_findpw);
 
-
         userid = findViewById(R.id.userid);
         userpw = findViewById(R.id.userpw);
 

@@ -46,9 +46,6 @@
             android:name=".OcrActivity"
             android:exported="false" />
         <activity
-            android:name=".HomeActivity"
-            android:exported="false" />
-        <activity
             android:name=".FindPWnext"
             android:exported="false" />
         <activity
@@ -77,6 +74,9 @@
             android:exported="false" />
         <activity
             android:name=".Register"
+            android:exported="false" />
+        <activity
+            android:name=".HomeActivity"
             android:exported="false" />
         <activity android:name=".enterpriseRst3" />
         <activity

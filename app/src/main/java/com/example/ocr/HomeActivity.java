@@ -20,6 +20,7 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
+    public static String s;
     HomeFragment homeFragment;
     RentalFragment rentalFragment;
     LoanFragment returnFragment;
@@ -68,10 +69,8 @@ public class HomeActivity extends AppCompatActivity {
             if(result.getContents() == null){
                 RentalFragment.makeOcr();//qr이 안되면 ocr로 한다.
             }else {
-
-                Toast.makeText(getApplicationContext(), "스캔~" + result.getContents(), Toast.LENGTH_LONG).show();
                 String datas = "대여가능";
-                RentalFragment.loadEquipment("20"+result.getContents());
+                RentalFragment.loadEquipment(/*"20"+result.getContents()원래는 이걸로 해야함*/"test1");
 
                 Req req = new Req(result.getContents(),datas);
                 retrofiyclient = Retrofiyclient.getInstance();

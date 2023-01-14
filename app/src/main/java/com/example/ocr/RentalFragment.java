@@ -23,6 +23,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -33,6 +34,7 @@ import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
@@ -65,12 +67,14 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class RentalFragment extends Fragment {
-    static TextView text_name;
+    static FragmentActivity fragmentActivity;//getActivity()를 사용하기 위함
+    static TextView text_name,text_posible,text_code,text_number,text_purchase,text_date,text_standard;
+    static Button btn_repair,btn_rental;
     static String name;
     ImageView img_camera, imageView;
     private TessBaseAPI mTess; //Tess API reference
     String datapath = "" ; //언어데이터가 있는 경로
-    Context context;
+    static Context context;
     View view;
     Uri photoUri;
     String imageFilePath;
@@ -97,7 +101,10 @@ public class RentalFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.fragment_rental, container, false);
+        textSet();
+        btnSet();
         linearLayout = view.findViewById(R.id.linearLayout);
+        fragmentActivity = getActivity();
 
         ocrSetting();//ocr관련 세팅
         ocr = view.findViewById(R.id.text);//ocr작동 시켜주는 버튼
@@ -125,35 +132,31 @@ public class RentalFragment extends Fragment {
         });
         return view;
     }
+    private void textSet() {
+        text_name = view.findViewById(R.id.text_name);
+        text_posible = view.findViewById(R.id.text_posible);
+        text_code = view.findViewById(R.id.text_code);
+        text_number = view.findViewById(R.id.text_number);
+        text_purchase = view.findViewById(R.id.text_purchase);
+        text_date = view.findViewById(R.id.text_date);
+        text_standard = view.findViewById(R.id.text_standard);
+    }
+    private void btnSet() {
+        btn_repair = view.findViewById(R.id.btn_repair);
+        btn_rental = view.findViewById(R.id.btn_rental);
+    }
     static void loadEquipment(String tool_id) {
-       linearLayout.setVisibility(View.GONE);
-       Toast.makeText(linearLayout.getContext(), "asdf",Toast.LENGTH_SHORT).show();
-
         new Thread(){
             @Override
             public void run() {
                 try {
-
                     StringBuffer response = new StringBuffer();//여기에 json을 문자열로 받아올것임
-                    URL url = new URL("http://120.142.105.189:5080/rental/rentalTool");
+                    URL url = new URL("http://120.142.105.189:5080/tool/viewTool?tool_id="+tool_id);
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestProperty("content-type", "application/json");
                     connection.setRequestProperty("Accept", " application/json"); // api 리턴값을 json으로 받을 경우!
-                    connection.setRequestMethod("POST");         // 통신방식
-                    connection.setDoInput(true);                // 읽기모드 지정
-                    connection.setUseCaches(false);             // 캐싱데이터를 받을지 안받을지
-                    connection.setConnectTimeout(15000);        // 통신 타임아웃a
-                    //connection.setRequestProperty("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoic3NzIiwidXNlcl9saWNlbnNlIjozLCJleHAiOjE2NzMyMTk5NDUsImlhdCI6MTY3MzE5ODM0NSwiaXNzIjoiYWVsaW1pIn0.o24KC-1fTwGPMF0vMW-XojXAoyu1cBs6kb2Ea6woceQ");
-
-                    JSONObject body = new JSONObject();
-                    body.put("tool_id", /*원래는 tool_id로 해야함*/"test1");
-                    body.put("user_id", MainActivity.userid.getText().toString());
-                    body.put("department_id", "1");
-
-                    BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
-                    bw.write(body.toString());
-                    bw.flush();
-                    bw.close();
+                    connection.setRequestMethod("GET");// 통신방식
+                    connection.setRequestProperty("token", MainActivity.token);
 
                     int responseCode = connection.getResponseCode();
 
@@ -175,36 +178,66 @@ public class RentalFragment extends Fragment {
                         }
                         in.close();
                     }
-
                     JSONObject obj = new JSONObject(response.toString());// jsonData를 먼저 JSONObject 형태로 바꾼다.
                     boolean suc = obj.getBoolean("suc");// boxOfficeResult의 JSONObject에서 "dailyBoxOfficeList"의 JSONArray 추출
 
+                    fragmentActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(suc != true)Toast.makeText(fragmentActivity,"대여할 수 없는 기자재 입니다.",Toast.LENGTH_SHORT).show();
+                            else{
+                                try {
+                                    JSONObject tool = obj.getJSONObject("tool");// jsonData를 먼저 JSONObject 형태로 바꾼다.
+                                    JSONObject result = tool.getJSONObject("result");// jsonData를 먼저 JSONObject 형태로 바꾼다.
+
+                                    String tool_name = result.getString("tool_name");
+                                    text_name.setText(tool_name);
+                                    String tool_state = result.getString("tool_state");
+                                    text_posible.setText(tool_state);
+                                    String tool_code = result.getString("tool_code");
+                                    text_code.setText(tool_code);
+                                    String tool_id = result.getString("tool_id");
+                                    text_number.setText(tool_id);
+                                    String tool_purchase_division = result.getString("tool_purchase_division");
+                                    text_purchase.setText(tool_purchase_division);
+                                    String tool_purchase_date = result.getString("tool_purchase_date");
+                                    tool_purchase_date = tool_purchase_date.substring(0,10);//문자열 자르기
+                                    text_date.setText(tool_purchase_date);
+                                    String tool_standard = result.getString("tool_standard");
+                                    text_standard.setText(tool_standard);
+
+                                } catch (JSONException e) {
+                                    e.printStackTrace();
+                                }
+                                linearLayout.setVisibility(View.GONE);
+                                btn_rental.setOnClickListener(v -> {
+                                    rental(tool_id);
+                                });
+                            }
+                        }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
             }
         }.start();
-        /*if 대여 버튼을 누르면*/rental();//대여
     }
-    static void rental(){
+    static void rental(String tool_id){
         new Thread(){
             @Override
             public void run() {
                 try {
-
                     StringBuffer response = new StringBuffer();//여기에 json을 문자열로 받아올것임
                     URL url = new URL("http://120.142.105.189:5080/rental/rentalTool");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestProperty("content-type", "application/json");
-                    connection.setRequestProperty("Accept", " application/json"); // api 리턴값을 json으로 받을 경우!
                     connection.setRequestMethod("POST");         // 통신방식
                     connection.setDoInput(true);                // 읽기모드 지정
                     connection.setUseCaches(false);             // 캐싱데이터를 받을지 안받을지
                     connection.setConnectTimeout(15000);        // 통신 타임아웃a
-                    //connection.setRequestProperty("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoic3NzIiwidXNlcl9saWNlbnNlIjozLCJleHAiOjE2NzMyMTk5NDUsImlhdCI6MTY3MzE5ODM0NSwiaXNzIjoiYWVsaW1pIn0.o24KC-1fTwGPMF0vMW-XojXAoyu1cBs6kb2Ea6woceQ");
 
                     JSONObject body = new JSONObject();
-                    body.put("tool_id", /*원래는 tool_id로 해야함*/"test1");
+                    body.put("tool_id", /*원래는 tool_id로 해야함*/tool_id);
                     body.put("user_id", MainActivity.userid.getText().toString());
                     body.put("department_id", "1");
 
@@ -236,7 +269,16 @@ public class RentalFragment extends Fragment {
 
                     JSONObject obj = new JSONObject(response.toString());// jsonData를 먼저 JSONObject 형태로 바꾼다.
                     boolean suc = obj.getBoolean("suc");// boxOfficeResult의 JSONObject에서 "dailyBoxOfficeList"의 JSONArray 추출
-
+                    fragmentActivity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            if(suc!=true)Toast.makeText(fragmentActivity,"기자재를 대여하지 못했습니다.",Toast.LENGTH_SHORT).show();
+                            else {
+                                Toast.makeText(fragmentActivity,"기자재를 대여했습니다.",Toast.LENGTH_SHORT).show();
+                                linearLayout.setVisibility(View.VISIBLE);
+                            }
+                        }
+                    });
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
