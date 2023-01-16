@@ -25,6 +25,12 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
+            android:name=".TendinousActivity"
+            android:exported="false" />
+        <activity
+            android:name=".RentalActivity"
+            android:exported="false" />
+        <activity
             android:name=".RepairActivity"
             android:exported="false" />
         <activity

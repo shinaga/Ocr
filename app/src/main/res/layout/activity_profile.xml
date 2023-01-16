@@ -10,11 +10,8 @@
         android:layout_height="match_parent">
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-    <include
-        android:id="@+id/toolbar"
-        layout="@layout/toolbar_main"/>
-
+            android:layout_height="match_parent"
+            android:paddingTop="24dp">
     <ImageView
         android:id="@+id/img_profile"
         android:layout_width="23dp"
@@ -75,18 +72,6 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/text_number" />
 
-    <Button
-        android:id="@+id/btn_modify"
-        android:layout_width="84dp"
-        android:layout_height="36dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="16dp"
-        android:backgroundTint="#9785CB"
-        android:text="정보수정"
-        android:textColor="#ffffff"
-        android:textSize="12dp"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_email" />
 
     <View
         android:id="@+id/view"
@@ -96,7 +81,7 @@
         android:layout_marginTop="4dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        app:layout_constraintTop_toBottomOf="@id/btn_modify"/>
+        app:layout_constraintTop_toBottomOf="@id/text_email"/>
 
     <TextView
         android:layout_width="wrap_content"

@@ -20,10 +20,11 @@ import retrofit2.Callback;
 import retrofit2.Response;
 
 public class HomeActivity extends AppCompatActivity {
-    public static String s;
+    static int flag;
     HomeFragment homeFragment;
     RentalFragment rentalFragment;
-    LoanFragment returnFragment;
+    LoanFragment loanFragment;
+    ReturnFragment returnFragment;
 
     Retrofiyclient retrofiyclient;
     Inter inter;
@@ -34,7 +35,8 @@ public class HomeActivity extends AppCompatActivity {
 
         homeFragment = new HomeFragment(this);
         rentalFragment = new RentalFragment(this);
-        returnFragment = new LoanFragment(this);
+        loanFragment = new LoanFragment(this);
+        returnFragment = new ReturnFragment(this);
         getSupportFragmentManager().beginTransaction().replace(R.id.containers, homeFragment).commit();
 
         NavigationBarView navigationBarView = findViewById(R.id.bottom_navigationview);
@@ -50,6 +52,28 @@ public class HomeActivity extends AppCompatActivity {
                         getSupportFragmentManager().beginTransaction().replace(R.id.containers, rentalFragment).commit();
                         return true;
                     case R.id.ret:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, loanFragment).commit();
+                        return true;
+                }
+                return false;
+            }
+        });
+        NavigationBarView navigationBarView2 = findViewById(R.id.bottom_navigationview2);
+        navigationBarView2.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+
+                switch(item.getItemId()){
+                    case R.id.home:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, homeFragment).commit();
+                        return true;
+                    case R.id.rental:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, rentalFragment).commit();
+                        return true;
+                    case R.id.ret:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, loanFragment).commit();
+                        return true;
+                    case R.id.ret2:
                         getSupportFragmentManager().beginTransaction().replace(R.id.containers, returnFragment).commit();
                         return true;
                 }
@@ -58,7 +82,7 @@ public class HomeActivity extends AppCompatActivity {
         });
     }
     public void myProfile(View v){
-        Intent intent = new Intent(this,ProfileActivity.class);
+        Intent intent = new Intent(this, ProfileActivity.class);
         startActivity(intent);
     }
     @Override
@@ -70,8 +94,8 @@ public class HomeActivity extends AppCompatActivity {
                 RentalFragment.makeOcr();//qr이 안되면 ocr로 한다.
             }else {
                 String datas = "대여가능";
-                RentalFragment.loadEquipment(/*"20"+result.getContents()원래는 이걸로 해야함*/"test1");
-
+                if(flag==1) RentalFragment.loadEquipment(/*"20"+result.getContents()원래는 이걸로 해야함*/"123456");
+                else if(flag==2) ReturnFragment.loadEquipment(/*"20"+result.getContents()원래는 이걸로 해야함*/"123456");
                 Req req = new Req(result.getContents(),datas);
                 retrofiyclient = Retrofiyclient.getInstance();
                 inter = Retrofiyclient.getInter();

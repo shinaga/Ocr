@@ -3,12 +3,16 @@ package com.example.ocr;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.bumptech.glide.Glide;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -28,13 +32,14 @@ public class RepairActivity extends AppCompatActivity {
     static String tool_id;
     TextView text_name,text_posible,text_code,text_number,text_purchase,text_date,text_standard;
     Button btn_repair;
-
+    ImageView img;
     EditText edit_tendinous;
     String baseUrl = "http://120.142.105.189:5080/";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_repair);
+        img = findViewById(R.id.img);
         textSet();
 
         btn_repair = findViewById(R.id.btn_repair);
@@ -111,6 +116,11 @@ public class RepairActivity extends AppCompatActivity {
                                     String tool_standard = result.getString("tool_standard");
                                     text_standard.setText(tool_standard);
 
+                                    JSONObject image = tool.getJSONObject("image");// 이미지를 가져오기 위해
+                                    if(image!=null){//image가 없으면 false임
+                                        String img_url = "http://120.142.105.189:5080/tool/"+image.getString("img_url");
+                                        Glide.with(getApplicationContext()).load(img_url).into(img);
+                                    }
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }

@@ -29,7 +29,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView idfind, pwfind;
     static String token;
 
-
     RetrofitClient retrofitClient;
     LoginAPI loginAPI;
     @Override

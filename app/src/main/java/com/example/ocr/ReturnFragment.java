@@ -30,7 +30,6 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
@@ -38,13 +37,10 @@ import androidx.fragment.app.FragmentActivity;
 
 import com.bumptech.glide.Glide;
 import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 import com.googlecode.tesseract.android.TessBaseAPI;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -57,20 +53,15 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Pattern;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-
-public class RentalFragment extends Fragment {
+public class ReturnFragment extends Fragment {
     static FragmentActivity fragmentActivity;//getActivity()를 사용하기 위함
     static TextView text_name,text_posible,text_code,text_number,text_purchase,text_date,text_standard;
-    static Button btn_repair,btn_rental;
+    static Button btn_repair,btn_return;
     static String name;
     ImageView img_camera,imageView;
     static ImageView img;
@@ -85,11 +76,11 @@ public class RentalFragment extends Fragment {
     Inter inter;
     static LinearLayout linearLayout;
 
-    public RentalFragment(Context context) {
+    public ReturnFragment(Context context) {
         this.context = context;
     }
 
-     // 권한 요청
+    // 권한 요청
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
@@ -102,8 +93,8 @@ public class RentalFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        view = inflater.inflate(R.layout.fragment_rental, container, false);
-        HomeActivity.flag = 1;
+        view = inflater.inflate(R.layout.fragment_return, container, false);
+        HomeActivity.flag = 2;
         img = view.findViewById(R.id.image);
 
         textSet();
@@ -148,7 +139,7 @@ public class RentalFragment extends Fragment {
     }
     private void btnSet() {
         btn_repair = view.findViewById(R.id.btn_repair);
-        btn_rental = view.findViewById(R.id.btn_rental);
+        btn_return = view.findViewById(R.id.btn_return);
     }
     static void loadEquipment(String tool_id) {
         new Thread(){
@@ -189,7 +180,7 @@ public class RentalFragment extends Fragment {
                     fragmentActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if(suc != true)Toast.makeText(fragmentActivity,"대여할 수 없는 기자재 입니다.",Toast.LENGTH_SHORT).show();
+                            if(suc != true) Toast.makeText(fragmentActivity,"대여할 수 없는 기자재 입니다.",Toast.LENGTH_SHORT).show();
                             else{
                                 try {
                                     JSONObject tool = obj.getJSONObject("tool");// jsonData를 먼저 JSONObject 형태로 바꾼다.
@@ -217,13 +208,14 @@ public class RentalFragment extends Fragment {
                                         Glide.with(context).load(img_url).into(img);
                                     }
                                     btn_repair.setVisibility(View.VISIBLE);
-                                    btn_rental.setVisibility(View.VISIBLE);
+                                    btn_return.setVisibility(View.VISIBLE);
                                 } catch (JSONException e) {
                                     e.printStackTrace();
                                 }
                                 linearLayout.setVisibility(View.GONE);
-                                btn_rental.setOnClickListener(v -> {
-                                    rental(tool_id);
+
+                                btn_return.setOnClickListener(v -> {
+                                    ret(tool_id);
                                 });
                             }
                         }
@@ -234,13 +226,13 @@ public class RentalFragment extends Fragment {
             }
         }.start();
     }
-    static void rental(String tool_id){
+    static void ret(String tool_id){
         new Thread(){
             @Override
             public void run() {
                 try {
                     StringBuffer response = new StringBuffer();//여기에 json을 문자열로 받아올것임
-                    URL url = new URL("http://120.142.105.189:5080/rental/rentalTool");
+                    URL url = new URL("http://120.142.105.189:5080/rental/returnTool");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestProperty("content-type", "application/json");
                     connection.setRequestMethod("POST");         // 통신방식
@@ -250,7 +242,6 @@ public class RentalFragment extends Fragment {
 
                     JSONObject body = new JSONObject();
                     body.put("tool_id", /*원래는 tool_id로 해야함*/tool_id);
-                    body.put("user_id", MainActivity.userid.getText().toString());
                     body.put("department_id", "1");
 
                     BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(connection.getOutputStream()));
@@ -284,9 +275,9 @@ public class RentalFragment extends Fragment {
                     fragmentActivity.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            if(suc!=true)Toast.makeText(fragmentActivity,"기자재를 대여하지 못했습니다.",Toast.LENGTH_SHORT).show();
+                            if(suc!=true)Toast.makeText(fragmentActivity,"기자재를 반납하지 못했습니다.",Toast.LENGTH_SHORT).show();
                             else {
-                                Toast.makeText(fragmentActivity,"기자재를 대여했습니다.",Toast.LENGTH_SHORT).show();
+                                Toast.makeText(fragmentActivity,"기자재를 반납했습니다.",Toast.LENGTH_SHORT).show();
                                 linearLayout.setVisibility(View.VISIBLE);
                             }
                         }
@@ -299,7 +290,7 @@ public class RentalFragment extends Fragment {
     }
     private void authority(){
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(ActivityCompat.checkSelfPermission(getActivity(),Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(),Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            if(ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(),Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
                 Log.d(TAG, "권한 설정 완료");
             }
             else {
@@ -432,10 +423,10 @@ public class RentalFragment extends Fragment {
         OCRresult = mTess.getUTF8Text();
 
         String pattern = "^[0-9]*$"; // 숫자만 등장하는지 확인하는 정규표현식
-                String result = "사진을 다시 촬영해 주세요.";//촬영이 안되면 이 문자열이 출력됨
-                for(int i=0;i<OCRresult.length()-13;i++){
-                    if(Pattern.matches(pattern, OCRresult.substring(i,i+13))){//문자열이 13연속으로 숫자로 이어지는지 판단
-                        result = OCRresult.substring(i,i+13);
+        String result = "사진을 다시 촬영해 주세요.";//촬영이 안되면 이 문자열이 출력됨
+        for(int i=0;i<OCRresult.length()-13;i++){
+            if(Pattern.matches(pattern, OCRresult.substring(i,i+13))){//문자열이 13연속으로 숫자로 이어지는지 판단
+                result = OCRresult.substring(i,i+13);
                 break;//for문을 빠져나온다.
             }
         }

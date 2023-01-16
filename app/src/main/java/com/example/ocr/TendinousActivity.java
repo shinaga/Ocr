@@ -4,10 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import org.json.JSONArray;
@@ -24,29 +21,20 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class ProfileActivity extends AppCompatActivity {
-    private RecyclerView recycler_rental,recycler_tendinous;
-    private ArrayList<Equipment> equipmentList,equipmentList2;//리사이클러뷰에 넣어줄 기자재 리스트
-    private EquipmentAdapter recyclerAdapter,recyclerAdapter2;
+public class TendinousActivity extends AppCompatActivity {
+    private RecyclerView recycler_rental;
+    private ArrayList<Equipment> equipmentList;//리사이클러뷰에 넣어줄 기자재 리스트
+    private EquipmentAdapter recyclerAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_profile);
+        setContentView(R.layout.activity_tendinous);
 
-        findViewById(R.id.text_more).setOnClickListener(v -> {
-            Intent intent = new Intent(this, RentalActivity.class);
-            startActivity(intent);
-        });
-        findViewById(R.id.text_more2).setOnClickListener(v -> {
-            Intent intent = new Intent(this, TendinousActivity.class);
-            startActivity(intent);
-        });
-        recyclerViewSet(3,4);//RecyclerView 세팅한다.
+        recyclerViewSet(4);//RecyclerView 세팅한다.
         loadEquipment();//서버에서 기자재 목록 불러오기
-        loadEquipment2();//서버에서 기자재 목록 불러오기2
     }
-    private void recyclerViewSet(int i, int j) {
+    private void recyclerViewSet(int i) {
         equipmentList = new ArrayList<Equipment>();//ArrayList 생성
 
         recycler_rental = findViewById(R.id.recycler_rental);//layout에서 찾기
@@ -58,18 +46,6 @@ public class ProfileActivity extends AppCompatActivity {
         //mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL,false));
 
         //recyclerAdapter.setEquipmentList(myEquipmentList);//RecyclerView에 noticeList를 연결한다.
-
-        //두번째 리사이클러뷰
-        equipmentList2 = new ArrayList<Equipment>();//ArrayList 생성
-        recycler_tendinous = findViewById(R.id.recycler_tendinous);//layout에서 찾기
-
-        recyclerAdapter2 = new EquipmentAdapter(j,getApplicationContext());//어댑터 대입
-        /* initiate recyclerview */
-        recycler_tendinous.setAdapter(recyclerAdapter2);//어댑터 연결
-        recycler_tendinous.setLayoutManager(new LinearLayoutManager(this));//layout 형식 지정
-        //mRecyclerView.setLayoutManager(new LinearLayoutManager(this, RecyclerView.VERTICAL,false));
-
-        recyclerAdapter.setEquipmentList(equipmentList2);//RecyclerView에 noticeList를 연결한다.
     }
     public class ThreadSee extends Thread{
         Equipment equipment;
@@ -118,7 +94,7 @@ public class ProfileActivity extends AppCompatActivity {
                 runOnUiThread(new Runnable() {
                     @Override
                     public void run() {
-                        if(suc != true)Toast.makeText(getApplicationContext(),"대여할 수 없는 기자재 입니다.",Toast.LENGTH_SHORT).show();
+                        if(suc != true) Toast.makeText(getApplicationContext(),"대여할 수 없는 기자재 입니다.",Toast.LENGTH_SHORT).show();
                         else{
                             try {
                                 JSONObject tool = obj.getJSONObject("tool");// jsonData를 먼저 JSONObject 형태로 바꾼다.
@@ -136,14 +112,6 @@ public class ProfileActivity extends AppCompatActivity {
                                     recyclerAdapter.setEquipmentList(equipmentList);//RecyclerView에 noticeList를 연결한다.
                                     recyclerAdapter.notifyDataSetChanged();
                                 }
-                                else if(type==2){
-                                    equipmentList2.add(equipment);
-
-                                    Collections.sort(equipmentList2);
-                                    recyclerAdapter2.setEquipmentList(equipmentList2);//RecyclerView에 noticeList를 연결한다.
-                                    recyclerAdapter2.notifyDataSetChanged();
-                                }
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -162,78 +130,6 @@ public class ProfileActivity extends AppCompatActivity {
         }
     }
     private void loadEquipment() {
-        new Thread(){
-            @Override
-            public void run() {
-                equipmentList.clear();
-                try {
-                    StringBuffer response = new StringBuffer();//여기에 json을 문자열로 받아올것임
-
-                    URL url = new URL("http://120.142.105.189:5080/rental/myAllRentalList/"+MainActivity.userid.getText().toString()+"/1");
-                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestProperty("content-type", "application/json");
-                    connection.setRequestMethod("GET");         // 통신방식
-                    connection.setDoInput(true);                // 읽기모드 지정
-                    connection.setUseCaches(false);             // 캐싱데이터를 받을지 안받을지
-                    connection.setConnectTimeout(15000);        // 통신 타임아웃
-                    //connection.setRequestProperty("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoic3NzIiwidXNlcl9saWNlbnNlIjozLCJleHAiOjE2NzMyNTg5OTksImlhdCI6MTY3MzIzNzM5OSwiaXNzIjoiYWVsaW1pIn0.AGa5ugl5Z2z4Fweh0hbOffRdXwgr2qO1SjP20PTRa6M");
-
-                    int responseCode = connection.getResponseCode();
-
-                    if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED) {
-                        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                        String inputLine;
-                        response = new StringBuffer();
-                        while ((inputLine = in.readLine()) != null) {
-                            response.append(inputLine);
-                        }
-                        in.close();
-
-                    } else {
-                        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
-                        String inputLine;
-                        response = new StringBuffer();
-                        while ((inputLine = in.readLine()) != null) {
-                            response.append(inputLine);
-                        }
-                        in.close();
-                    }
-                    JSONObject obj = new JSONObject(response.toString());// jsonData를 먼저 JSONObject 형태로 바꾼다.
-                    JSONArray result = obj.getJSONArray("result");// boxOfficeResult의 JSONObject에서 "dailyBoxOfficeList"의 JSONArray 추출
-
-                    runOnUiThread(new Runnable() {//getActivity().을 붙여야 fragment에서 runOnUiThread가 작동함
-                        @Override
-                        public void run() {
-                            for(int i=0;!(i>result.length()||i>2);i++){
-                                try {
-                                    JSONObject tool = result.getJSONObject(i);// result의 "i 번째"의 JSONObject를 추출
-                                    Equipment equipment = new Equipment();
-
-                                    JSONObject image = tool.getJSONObject("tool").getJSONObject("img");// 이미지를 가져오기 위해
-                                    if(image!=null){//image가 없으면 false임
-                                        equipment.url = image.getString("img_url");
-                                    }
-                                    Thread th = new Thread(new ThreadSee(equipment, tool.getJSONObject("tool").getString("tool_id"),1));//리사이클러뷰 아이템을 클릭했을때 표시할 정보를 가져오기 위한 클래스
-                                    th.start();
-                                    th.join();
-                                } catch (JSONException | InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }
-                    });
-
-                } catch (MalformedURLException e) {
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-            }
-        }.start();
-    }
-    private void loadEquipment2() {
         new Thread(){
             @Override
             public void run() {
@@ -276,7 +172,7 @@ public class ProfileActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {//getActivity().을 붙여야 fragment에서 runOnUiThread가 작동함
                         @Override
                         public void run() {
-                            for(int i=0;!(i>result.length()||i>2);i++){
+                            for(int i=0;i<result.length();i++){
                                 try {
                                     JSONObject tool = result.getJSONObject(i);// result의 "i 번째"의 JSONObject를 추출
                                     Equipment equipment = new Equipment();
@@ -285,7 +181,7 @@ public class ProfileActivity extends AppCompatActivity {
                                     if(image!=null){//image가 없으면 false임
                                         equipment.url = image.getString("img_url");
                                     }
-                                    Thread th = new Thread(new ThreadSee(equipment, tool.getJSONObject("tool").getString("tool_id"),2));//리사이클러뷰 아이템을 클릭했을때 표시할 정보를 가져오기 위한 클래스
+                                    Thread th = new Thread(new ThreadSee(equipment, tool.getJSONObject("tool").getString("tool_id"),1));//리사이클러뷰 아이템을 클릭했을때 표시할 정보를 가져오기 위한 클래스
                                     th.start();
                                     th.join();
                                 } catch (JSONException | InterruptedException e) {

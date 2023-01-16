@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/image"
+            android:layout_width="64dp"
+            android:layout_height="64dp"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/round_image"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:textColor="#000000"
+            android:textStyle="bold"
+            android:text=""
+            app:layout_constraintStart_toEndOf="@+id/image"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@id/text_posible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="24dp"
+            android:layout_marginTop="8dp"
+            android:textSize="14dp"
+            app:layout_constraintStart_toEndOf="@+id/text_name"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/text_code"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="8dp"
+            android:textSize="14dp"
+            app:layout_constraintStart_toEndOf="@+id/image"
+            app:layout_constraintTop_toBottomOf="@id/text_name" />
+
+        <TextView
+            android:id="@+id/text_number"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="26dp"
+            android:textSize="14dp"
+            app:layout_constraintStart_toEndOf="@+id/image"
+            app:layout_constraintTop_toBottomOf="@id/text_name" />
+
+        <LinearLayout
+            android:id="@+id/linear"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+
+            app:layout_constraintTop_toBottomOf="@+id/text_number">
+
+            <TextView
+                android:id="@+id/text_purchase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="97dp"
+                android:layout_marginTop="8dp"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/text_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="97dp"
+                android:layout_marginTop="2dp"
+                android:textSize="10dp" />
+
+            <TextView
+                android:id="@+id/text_standard"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="97dp"
+                android:layout_marginTop="2dp"
+                android:textSize="10dp" />
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="80dp"
+            android:orientation="horizontal"
+            android:gravity="right"
+            app:layout_constraintTop_toBottomOf="@+id/text_number">
+            <Button
+                android:id="@+id/btn_repair"
+                android:layout_width="80dp"
+                android:layout_height="32dp"
+                android:backgroundTint="#9785CB"
+                android:text="수리 요청"
+                android:visibility="gone"
+                android:textColor="#ffffff"
+                android:textSize="10dp"/>
+            <Button
+                android:id="@+id/btn_return"
+                android:layout_width="80dp"
+                android:layout_height="32dp"
+                android:backgroundTint="#9785CB"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
+                android:text="반납 하기"
+                android:visibility="gone"
+                android:textColor="#ffffff"
+                android:textSize="10dp"/>
+        </LinearLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@drawable/border_purple"
+        android:gravity="center"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <ImageView
+            android:id="@+id/img_camera"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/camera"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="카메라"
+            android:textSize="20dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_camera" />
+        <TextView
+            android:id="@+id/text"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="QR코드 인식이 안될때"
+            android:textColor="#888888"
+            android:textSize="10dp"
+            android:textStyle="bold"
+            android:visibility="gone"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_camera" />
+
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        tools:ignore="MissingConstraints" />
+</androidx.constraintlayout.widget.ConstraintLayout>

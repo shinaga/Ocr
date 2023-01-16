@@ -29,4 +29,14 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:itemIconTint="@drawable/bottom_icon_color"
         app:menu="@menu/bottom_menu" />
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottom_navigationview2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        app:itemBackground="@color/white"
+        app:labelVisibilityMode="unlabeled"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:itemIconTint="@drawable/bottom_icon_color"
+        app:menu="@menu/bottom_menu_master" />
 </androidx.constraintlayout.widget.ConstraintLayout>

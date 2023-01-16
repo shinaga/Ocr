@@ -20,7 +20,6 @@
                     android:layout_marginStart="16dp"
                     android:layout_marginTop="8dp"
                     android:background="@drawable/round_image"
-                    android:src="@drawable/pad"
                     app:layout_constraintStart_toStartOf="parent"
                     app:layout_constraintTop_toTopOf="parent" />
 
@@ -111,6 +110,7 @@
                             android:layout_height="32dp"
                             android:backgroundTint="#9785CB"
                             android:text="수리 요청"
+                            android:visibility="gone"
                             android:textColor="#ffffff"
                             android:textSize="10dp"/>
                         <Button
@@ -121,6 +121,7 @@
                             android:layout_marginStart="16dp"
                             android:layout_marginEnd="16dp"
                             android:text="대여 하기"
+                            android:visibility="gone"
                             android:textColor="#ffffff"
                             android:textSize="10dp"/>
                 </LinearLayout>
