@@ -28,12 +28,19 @@ public class ProfileActivity extends AppCompatActivity {
     private RecyclerView recycler_rental,recycler_tendinous;
     private ArrayList<Equipment> equipmentList,equipmentList2;//리사이클러뷰에 넣어줄 기자재 리스트
     private EquipmentAdapter recyclerAdapter,recyclerAdapter2;
-
+    TextView textView,text_department,text_phoneNumber,text_number,text_email;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        textView = findViewById(R.id.textView);
+        text_department = findViewById(R.id.text_department);
+        text_phoneNumber = findViewById(R.id.text_phoneNumber);
+        text_number = findViewById(R.id.text_number);
+        text_email = findViewById(R.id.text_email);
+        profile();
+        
         findViewById(R.id.text_more).setOnClickListener(v -> {
             Intent intent = new Intent(this, RentalActivity.class);
             startActivity(intent);
@@ -46,6 +53,75 @@ public class ProfileActivity extends AppCompatActivity {
         loadEquipment();//서버에서 기자재 목록 불러오기
         loadEquipment2();//서버에서 기자재 목록 불러오기2
     }
+
+    private void profile() {
+        new Thread(){
+            @Override
+            public void run() {
+                equipmentList.clear();
+                try {
+                    StringBuffer response = new StringBuffer();//여기에 json을 문자열로 받아올것임
+
+                    URL url = new URL("http://120.142.105.189:5080/user/inquireMyInfo/?user_id="+MainActivity.userid.getText().toString());
+                    HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+                    connection.setRequestProperty("content-type", "application/json");
+                    connection.setRequestMethod("GET");         // 통신방식
+                    connection.setDoInput(true);                // 읽기모드 지정
+                    connection.setUseCaches(false);             // 캐싱데이터를 받을지 안받을지
+                    connection.setConnectTimeout(15000);        // 통신 타임아웃
+                    connection.setRequestProperty("token", MainActivity.token);
+
+                    int responseCode = connection.getResponseCode();
+
+                    if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED) {
+                        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                        String inputLine;
+                        response = new StringBuffer();
+                        while ((inputLine = in.readLine()) != null) {
+                            response.append(inputLine);
+                        }
+                        in.close();
+
+                    } else {
+                        BufferedReader in = new BufferedReader(new InputStreamReader(connection.getErrorStream()));
+                        String inputLine;
+                        response = new StringBuffer();
+                        while ((inputLine = in.readLine()) != null) {
+                            response.append(inputLine);
+                        }
+                        in.close();
+                    }
+
+                    JSONObject obj = new JSONObject(response.toString());// jsonData를 먼저 JSONObject 형태로 바꾼다.
+                    JSONObject inquireMyInfo = obj.getJSONObject("inquireMyInfo");// boxOfficeResult의 JSONObject에서 "dailyBoxOfficeList"의 JSONArray 추출
+
+                    runOnUiThread(new Runnable() {//getActivity().을 붙여야 fragment에서 runOnUiThread가 작동함
+                        @Override
+                        public void run() {
+                            try {
+                                textView.setText(inquireMyInfo.getString("user_name")+"님  (학부생)");
+                                text_department.setText("학과:        "+inquireMyInfo.getJSONObject("department").getString("department_name"));
+                                text_phoneNumber.setText("전화번호: "+inquireMyInfo.getString("user_phone_number"));
+                                text_number.setText("학번:        "+inquireMyInfo.getString("user_student_number"));
+                                text_email.setText("이메일:     "+inquireMyInfo.getString("user_email"));
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    });
+
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
     private void recyclerViewSet(int i, int j) {
         equipmentList = new ArrayList<Equipment>();//ArrayList 생성
 
@@ -83,7 +159,6 @@ public class ProfileActivity extends AppCompatActivity {
         public void run()
         {
             try {
-
                 StringBuffer response = new StringBuffer();//여기에 json을 문자열로 받아올것임
                 URL url = new URL("http://120.142.105.189:5080/tool/viewTool?tool_id="+tool_id);
                 HttpURLConnection connection = (HttpURLConnection) url.openConnection();

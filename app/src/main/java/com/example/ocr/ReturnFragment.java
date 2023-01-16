@@ -217,6 +217,11 @@ public class ReturnFragment extends Fragment {
                                 btn_return.setOnClickListener(v -> {
                                     ret(tool_id);
                                 });
+                                btn_repair.setOnClickListener(v->{
+                                    Intent intent = new Intent(v.getContext(),RepairActivity.class);
+                                    RepairActivity.tool_id = tool_id;
+                                    v.getContext().startActivity(intent);
+                                });
                             }
                         }
                     });

@@ -60,7 +60,7 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.View
         ImageView image;
         LinearLayout linear;
         TextView text_name,text_posible,text_code,text_number,text_purchase,text_day,text_date,text_standard,text_dday,text_date2;
-        Button btn_repair;
+        Button btn_repair,btn_extension;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -89,6 +89,7 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.View
             text_standard = itemView.findViewById(R.id.text_standard);
 
             btn_repair = itemView.findViewById(R.id.btn_repair);
+            btn_extension = itemView.findViewById(R.id.btn_extension);
         }
         @RequiresApi(api = Build.VERSION_CODES.O)
         void onBind(Equipment item) throws ParseException {
@@ -154,6 +155,9 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.View
                 Intent intent = new Intent(v.getContext(),RepairActivity.class);
                 RepairActivity.tool_id = item.number;
                 v.getContext().startActivity(intent);
+            });
+            btn_extension.setOnClickListener(v->{
+                LoanFragment.Retalgo(item.number);
             });
         }
     }

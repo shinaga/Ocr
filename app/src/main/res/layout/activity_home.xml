@@ -35,6 +35,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         app:itemBackground="@color/white"
+        android:visibility="gone"
         app:labelVisibilityMode="unlabeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:itemIconTint="@drawable/bottom_icon_color"
