@@ -12,6 +12,8 @@ public class Equipment implements Comparable<Equipment>{
     public String update_at;//대여해야하는 날짜
     public String standard;//물품 규격
     public String url;//이미지 URL
+    public String rental_id;//렌탈 id
+    public String day;//남은 날짜
     public int order;//순서 정렬 위한 변수
 
     @Override

@@ -14,6 +14,13 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ocr.MainActivity;
+import com.example.ocr.R;
+import com.example.ocr.RegisterAPI;
+import com.example.ocr.RegisterReq;
+import com.example.ocr.RegisterRes;
+import com.example.ocr.RetrofitClient;
+
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -53,7 +60,11 @@ public class enterpriseRst3 extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                btn_register4.setBackgroundColor(Color.parseColor("#9785CB"));
+                if(s.length() != 0) {
+                    btn_register4.setBackgroundResource(R.drawable.loginbackgrounddrawablebuttonemail);
+                }else {
+                    btn_register4.setBackgroundResource(R.drawable.loginbackgrounddrawablebutton);
+                }
             }
         });
 

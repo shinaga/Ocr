@@ -21,10 +21,10 @@
         tools:layout_editor_absoluteX="0dp" />
 
 
-    <EditText
+    <Spinner
         android:id="@+id/usercompany"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/loginbackgrounddrawable"
@@ -34,11 +34,22 @@
         app:layout_constraintBottom_toTopOf="@+id/userdepartment"
         tools:layout_editor_absoluteX="16dp" />
 
-    <EditText
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="10dp"
+        android:src="@drawable/vec"
+        app:layout_constraintBottom_toBottomOf="@+id/usercompany"
+        app:layout_constraintEnd_toEndOf="@+id/usercompany"
+        app:layout_constraintHorizontal_bias="0.971"
+        app:layout_constraintStart_toStartOf="@+id/usercompany"
+        app:layout_constraintTop_toTopOf="@+id/usercompany"
+        app:layout_constraintVertical_bias="0.533" />
+
+    <Spinner
 
         android:id="@+id/userdepartment"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="12dp"
         android:background="@drawable/loginbackgrounddrawable"
@@ -47,6 +58,17 @@
         android:paddingVertical="8dp"
         app:layout_constraintBottom_toTopOf="@+id/username"
         tools:layout_editor_absoluteX="20dp" />
+
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="10dp"
+        android:src="@drawable/vec"
+        app:layout_constraintBottom_toBottomOf="@+id/userdepartment"
+        app:layout_constraintEnd_toEndOf="@+id/userdepartment"
+        app:layout_constraintHorizontal_bias="0.971"
+        app:layout_constraintStart_toStartOf="@+id/userdepartment"
+        app:layout_constraintTop_toTopOf="@+id/userdepartment"
+        app:layout_constraintVertical_bias="0.533" />
 
     <EditText
 

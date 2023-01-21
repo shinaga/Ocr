@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.BitmapDrawable;
 import android.os.Build;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +27,12 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
+
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.ViewHolder>{
     private ArrayList<Equipment> equipmentList = new ArrayList<>();
@@ -126,25 +133,11 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.View
             if(item.purchase_date!=null&&item.update_at!=null){
                 text_date2.setText(item.purchase_date + "~"+item.update_at);
                 text_date2.setVisibility(View.VISIBLE);
-                //날짜 차이 구하기
-
-                String date1 = item.update_at.replace("-","/");
-                String date2 = (LocalDate.now()+"").replace("-","/");
-                Date format1 = new SimpleDateFormat("yyyy/MM/dd").parse(date1);
-                Date format2 = new SimpleDateFormat("yyyy/MM/dd").parse(date2);
-                long diffSec = (format1.getTime() - format2.getTime()) / 1000; //초 차이
-                long diffDays = diffSec / (24*60*60); //일자수 차이
+            }
+            if(item.day!=null){
                 if(i==2){
-                    if(diffDays<0)text_dday.setText("반납일이 지났습니다.");
-                    else if(diffDays==0)text_dday.setText("TODAY");
-                    else text_dday.setText("D - "+diffDays);
-                }
-                else if(i==3||i==4){
-                    if(diffDays<0)text_day.setText("반납일이 지났습니다.");
-                    else if(diffDays==0)text_day.setText("TODAY");
-                    else text_day.setText("D - "+diffDays);
-
-                    text_day.setVisibility(View.VISIBLE);
+                    text_dday.setText(item.day);
+                    text_dday.setVisibility(View.VISIBLE);
                 }
             }
             if(item.url!=null){
@@ -157,7 +150,7 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.View
                 v.getContext().startActivity(intent);
             });
             btn_extension.setOnClickListener(v->{
-                LoanFragment.Retalgo(item.number);
+                Retalgo(item.rental_id);
             });
         }
     }
@@ -171,5 +164,33 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.View
             e.printStackTrace();
         }
     }
+    void Retalgo(String rental_id){
 
+        RentalReq rentalReq = new RentalReq(rental_id);
+
+        Retrofit retrofit = new Retrofit.Builder().baseUrl("http://120.142.105.189:5080/").addConverterFactory(GsonConverterFactory.create()).build();
+        RentalAPI rentalAPI = retrofit.create(RentalAPI.class);
+        Call<RenatalRes> call = rentalAPI.getRental(rentalReq);
+
+        call.enqueue(new Callback<RenatalRes>() {
+            @Override
+            public void onResponse(Call<RenatalRes> call, Response<RenatalRes> response) {
+
+                if(response.isSuccessful()){
+                    Toast.makeText(context, response.body().tosuc().substring(response.body().tosuc().length()-21,response.body().tosuc().length()), Toast.LENGTH_LONG).show();
+                    Log.d("test1", response.body().tosuc());
+                }else {
+                    Toast.makeText(context, "에러", Toast.LENGTH_LONG).show();
+
+                }
+
+            }
+
+            @Override
+            public void onFailure(Call<RenatalRes> call, Throwable t) {
+                Log.d("test2", t.getMessage());
+                Toast.makeText(context, "통신실패", Toast.LENGTH_LONG).show();
+            }
+        });
+    }
 }

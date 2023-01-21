@@ -7,9 +7,6 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ocr.manageRst1;
-import com.example.ocr.enterpriseRst1;
-
 public class Register extends AppCompatActivity {
 
     ImageView img_student, img_register_enterprise, img_register_manager;

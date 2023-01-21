@@ -12,7 +12,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.io.IOException;
 
@@ -36,6 +41,25 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Intent intent = getIntent();
+        if(intent != null) {//푸시알림을 선택해서 실행한것이 아닌경우 예외처리
+            String notificationData = intent.getStringExtra("test");
+            if(notificationData != null)
+                Log.d("FCM_TEST", notificationData);
+        }
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (!task.isSuccessful()) {
+                            Log.w("test", "토큰 생성 실패", task.getException());
+                            return;
+                        }
+                        // 새로운 토큰 생성 성공 시
+                        String token = task.getResult();
+                        Log.d("test",token);
+                    }
+                });
         tv_register = findViewById(R.id.tv_loginpage_register);
         idfind = findViewById(R.id.tv_loginpage_findid);
         pwfind = findViewById(R.id.tv_loginpage_findpw);
@@ -95,14 +119,16 @@ public class MainActivity extends AppCompatActivity {
                         public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
 
                             if(response.isSuccessful()){
-                                Toast.makeText(getApplicationContext(), "통신성공", Toast.LENGTH_LONG).show();
                                 String result = response.body().toToken();
-                                token=result.substring(13,result.length()-1);
+                                token=result;
 
-                                Log.e("test32",  token);
-                                Intent intent = new Intent(MainActivity.this,HomeActivity.class);
-                                startActivity(intent);
-
+                                if(token.equals("TOKEN=null")) Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_LONG).show();
+                                else{
+                                    token=result.substring(13,result.length()-1);
+                                    Log.d("test",token);
+                                    Intent intent = new Intent(MainActivity.this,HomeActivity.class);
+                                    startActivity(intent);
+                                }
                             }else {
                                 Toast.makeText(getApplicationContext(), "통신오류", Toast.LENGTH_LONG).show();
                             }

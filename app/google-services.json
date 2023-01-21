@@ -1,0 +1,68 @@
+{
+  "project_info": {
+    "project_number": "604265002722",
+    "project_id": "rental-tool-2d7b4",
+    "storage_bucket": "rental-tool-2d7b4.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604265002722:android:f123fbb593cfa2abae90bb",
+        "android_client_info": {
+          "package_name": "com.example.ocr"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604265002722-u0076lrdrvvv6ro71erc7i8qhvqrt1ja.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8Jedg7XWf245E0Cbv6MEz1UpjVX2ub5Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "604265002722-u0076lrdrvvv6ro71erc7i8qhvqrt1ja.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:604265002722:android:48097dc7a203f3c6ae90bb",
+        "android_client_info": {
+          "package_name": "rental.tool.app"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "604265002722-u0076lrdrvvv6ro71erc7i8qhvqrt1ja.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA8Jedg7XWf245E0Cbv6MEz1UpjVX2ub5Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "604265002722-u0076lrdrvvv6ro71erc7i8qhvqrt1ja.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
