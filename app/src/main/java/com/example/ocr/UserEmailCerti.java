@@ -8,5 +8,5 @@ import retrofit2.http.POST;
 public interface UserEmailCerti {
 
     @POST("authEmail")
-    Call<ResponseBody> getEmail(@Body com.example.ocr.EmailDTO emailDTO);
+    Call<ResponseBody> getEmail(@Body  EmailDTO emailDTO);
 }

@@ -27,7 +27,7 @@ public class PWfind extends AppCompatActivity {
         mainpagebtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent1 = new Intent(PWfind.this, com.example.ocr.MainActivity.class);
+                Intent intent1 = new Intent(PWfind.this, MainActivity.class);
                 startActivity(intent1);
                 PWfind.this.finish();
             }

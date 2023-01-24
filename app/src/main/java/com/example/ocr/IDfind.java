@@ -1,14 +1,16 @@
 package com.example.ocr;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -26,12 +28,18 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class IDfind extends AppCompatActivity {
 
     private EditText useremail, emailnum;
+    private Spinner emailspiner;
 
     private Button nextpage;
 
     private String baseUrl = "http://120.142.105.189:5080/";
-    private com.example.ocr.UserEmailAPI userEmailAPI;
+    private UserEmailAPI userEmailAPI;
     private Button btn_emailCertified;
+
+
+    String itemresult;
+    String beng = "@";
+    String[] emailreult = {"naver.com", "daum.net", "gmail.com"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +51,24 @@ public class IDfind extends AppCompatActivity {
 
         nextpage = findViewById(R.id.btn_idfind);
         btn_emailCertified = findViewById(R.id.emailcertifiedbtn);
+
+        emailspiner = findViewById(R.id.findidemail);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, emailreult);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        emailspiner.setAdapter(adapter);
+        emailspiner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                itemresult = emailreult[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
 
         emailnum.addTextChangedListener(new TextWatcher() {
             @Override
@@ -57,7 +83,11 @@ public class IDfind extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                nextpage.setBackgroundColor(Color.parseColor("#9785CB"));
+                if(s.length() != 0) {
+                    nextpage.setBackgroundResource(R.drawable.loginbackgrounddrawablebuttonemail);
+                }else {
+                    nextpage.setBackgroundResource(R.drawable.loginbackgrounddrawablebutton);
+                }
             }
         });
 
@@ -66,11 +96,11 @@ public class IDfind extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //                Log.e("bibibic", v.toString());
-                String useremai = useremail.getText().toString();
+                String useremai = useremail.getText().toString() + beng + itemresult;
 
 //            emailDTO  = new EmailDTO(useremail);
                 Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).build();
-                userEmailAPI = retrofit.create(com.example.ocr.UserEmailAPI.class);
+                userEmailAPI = retrofit.create(UserEmailAPI.class);
                 Call<ResponseBody> call = userEmailAPI.getEmail(useremai);
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -100,10 +130,10 @@ public class IDfind extends AppCompatActivity {
             public void onClick(View v) {
 
                 String userEmail, emailNum;
-                userEmail = useremail.getText().toString();
+
                 emailNum = emailnum.getText().toString();
 
-                if(userEmail.trim().length() == 0 || userEmail == null || emailNum.trim().length() == 0 || emailNum == null){
+                if(emailNum.trim().length() == 0 || emailNum == null){
                     AlertDialog.Builder builder = new AlertDialog.Builder(IDfind.this);
                     builder.setTitle("알림").setMessage("정보 입력란을 다시 확인해주세요").setPositiveButton("확인", null).create().show();
                     AlertDialog alertDialog = builder.create();
@@ -120,7 +150,7 @@ public class IDfind extends AppCompatActivity {
     private void Suc(){
 
 
-        String getemail = useremail.getText().toString();
+        String getemail = useremail.getText().toString() + beng + itemresult;
         String getemailnum = emailnum.getText().toString();
 
         Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).build();

@@ -9,7 +9,7 @@ public class RetrofitClient {
   private static RetrofitClient instance = null;
   private static  RegisterAPI registerAPI;
   private static UserEmailCerti userEmailCerti;
-  private static com.example.ocr.LoginAPI loginAPI;
+  private static  LoginAPI loginAPI;
   private static String baseUrl = "http://120.142.105.189:5080/";
 
 
@@ -17,7 +17,7 @@ public class RetrofitClient {
       Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(ScalarsConverterFactory.create()).addConverterFactory(GsonConverterFactory.create()).build();
       registerAPI = retrofit.create(RegisterAPI.class);
       userEmailCerti = retrofit.create(UserEmailCerti.class);
-      loginAPI = retrofit.create(com.example.ocr.LoginAPI.class );
+      loginAPI = retrofit.create(LoginAPI.class );
 
   }
 
@@ -34,7 +34,7 @@ public class RetrofitClient {
     public static UserEmailCerti getUserEmailCerti(){
       return userEmailCerti;
     }
-    public static com.example.ocr.LoginAPI getLoginAPI(){
+    public static LoginAPI getLoginAPI(){
       return loginAPI;
 
     }

@@ -1,18 +1,20 @@
 package com.example.ocr;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.io.IOException;
 
@@ -35,6 +37,11 @@ public class manageRst2 extends AppCompatActivity {
     private String baseUrl = "http://120.142.105.189:5080/";
     private UserEmailAPI userEmailAPI;
 
+    Spinner emailspiner;
+    String itemresult;
+    String beng = "@";
+    String[] emailreult = {"naver.com", "daum.net", "gmail.com"};
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +54,27 @@ public class manageRst2 extends AppCompatActivity {
         et_useremail = findViewById(R.id.useremail);
         btn_emailCertified = findViewById(R.id.emailcertifiedbtn);
         textView =findViewById(R.id.emailCertified);
+        emailspiner = findViewById(R.id.emailsub2);
+
 
         Intent intent = getIntent();
 
-        et_studentid.addTextChangedListener(new TextWatcher() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, emailreult);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        emailspiner.setAdapter(adapter);
+        emailspiner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                itemresult = emailreult[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
+
+        textView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -63,7 +87,11 @@ public class manageRst2 extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                btn_register3.setBackgroundColor(Color.parseColor("#9785CB"));
+                if(s.length() != 0) {
+                    btn_register3.setBackgroundResource(R.drawable.loginbackgrounddrawablebuttonemail);
+                }else {
+                    btn_register3.setBackgroundResource(R.drawable.loginbackgrounddrawablebutton);
+                }
             }
 
 
@@ -75,7 +103,7 @@ public class manageRst2 extends AppCompatActivity {
             public void onClick(View v) {
 
                 //                Log.e("bibibic", v.toString());
-                String useremail = et_useremail.getText().toString();
+                String useremail = et_useremail.getText().toString() + beng + itemresult;
 
 //            emailDTO  = new EmailDTO(useremail);
                 Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).build();
@@ -111,14 +139,14 @@ public class manageRst2 extends AppCompatActivity {
             public void onClick(View v) {
                 String userstudentid = et_studentid.getText().toString();
                 String userphonenum = et_phone.getText().toString();
-                String usereamil = et_useremail.getText().toString();
+                String usereamil = et_useremail.getText().toString() + beng + itemresult;
                 String username = intent.getStringExtra("username");
                 String userset = textView.getText().toString();
 
                 Log.d("test321", String.valueOf(v));
 
                 if(userstudentid.trim().length() == 0 || userstudentid == null || userphonenum.trim().length() == 0 || userphonenum == null || usereamil.trim().length() == 0 || usereamil ==null
-                        || userset.trim().length() == 0 || userset == null){
+                || userset.trim().length() == 0 || userset == null){
                     AlertDialog.Builder builder = new AlertDialog.Builder(manageRst2.this);
                     builder.setTitle("알림").setMessage("정보를 바르게 입력하시오").setPositiveButton("확인", null).create().show();
                     AlertDialog alertDialog = builder.create();

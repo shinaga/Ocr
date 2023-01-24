@@ -1,7 +1,6 @@
 package com.example.ocr;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -20,7 +19,7 @@ import retrofit2.Response;
 
 public class Register4 extends AppCompatActivity {
 
-    private com.example.ocr.RetrofitClient retrofitClient;
+    private RetrofitClient retrofitClient;
     private RegisterAPI registerAPI;
 
     private Button btn_register4;
@@ -53,7 +52,11 @@ public class Register4 extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                btn_register4.setBackgroundColor(Color.parseColor("#9785CB"));
+                if(s.length() != 0) {
+                    btn_register4.setBackgroundResource(R.drawable.loginbackgrounddrawablebuttonemail);
+                }else {
+                    btn_register4.setBackgroundResource(R.drawable.loginbackgrounddrawablebutton);
+                }
             }
         });
         btn_register4.setOnClickListener(new View.OnClickListener() {
@@ -90,8 +93,8 @@ public class Register4 extends AppCompatActivity {
 
         RegisterReq registerReq = new RegisterReq(userid, userpw, usereamil, userstudentid, username, userphonenum, userlicense, depatment);
 
-        retrofitClient =  com.example.ocr.RetrofitClient.getInstance();
-        registerAPI = com.example.ocr.RetrofitClient.getRegisterAPI();
+        retrofitClient =  RetrofitClient.getInstance();
+        registerAPI = RetrofitClient.getRegisterAPI();
         registerAPI.getRegisterRes(registerReq).enqueue(new Callback<RegisterRes>() {
             @Override
             public void onResponse(Call<RegisterRes> call, Response<RegisterRes> response) {
@@ -99,7 +102,7 @@ public class Register4 extends AppCompatActivity {
                 if(response.isSuccessful() && response.body() != null){
                         Log.d("test11", String.valueOf(response));
                         Toast.makeText(Register4.this, "통신성공!", Toast.LENGTH_LONG).show();
-                        Intent intent1 = new Intent(Register4.this, com.example.ocr.MainActivity.class);
+                        Intent intent1 = new Intent(Register4.this, MainActivity.class);
                         startActivity(intent1);
                         finish();
 

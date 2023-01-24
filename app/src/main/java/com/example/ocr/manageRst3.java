@@ -1,10 +1,6 @@
 package com.example.ocr;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -13,6 +9,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -53,7 +52,11 @@ public class manageRst3 extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                btn_register4.setBackgroundColor(Color.parseColor("#9785CB"));
+                if(s.length() != 0) {
+                    btn_register4.setBackgroundResource(R.drawable.loginbackgrounddrawablebuttonemail);
+                }else {
+                    btn_register4.setBackgroundResource(R.drawable.loginbackgrounddrawablebutton);
+                }
             }
         });
         btn_register4.setOnClickListener(new View.OnClickListener() {
@@ -85,8 +88,8 @@ public class manageRst3 extends AppCompatActivity {
         String userstudentid = intent.getStringExtra("userstudentid");
         String username = intent.getStringExtra("username");
         String userphonenum = intent.getStringExtra("userphonenum");
-        Integer userlicense = 3;
-        Integer depatment = 1;
+         Integer userlicense = 3;
+         Integer depatment = 1;
 
         RegisterReq registerReq = new RegisterReq(userid, userpw, usereamil, userstudentid, username, userphonenum, userlicense, depatment);
 
@@ -97,11 +100,11 @@ public class manageRst3 extends AppCompatActivity {
             public void onResponse(Call<RegisterRes> call, Response<RegisterRes> response) {
 
                 if(response.isSuccessful() && response.body() != null){
-                    Log.d("test11", String.valueOf(response));
-                    Toast.makeText(manageRst3.this, "통신성공!", Toast.LENGTH_LONG).show();
-                    Intent intent1 = new Intent(manageRst3.this, MainActivity.class);
-                    startActivity(intent1);
-                    finish();
+                        Log.d("test11", String.valueOf(response));
+                        Toast.makeText(manageRst3.this, "통신성공!", Toast.LENGTH_LONG).show();
+                        Intent intent1 = new Intent(manageRst3.this, MainActivity.class);
+                        startActivity(intent1);
+                        finish();
 
                 }else {
                     Toast.makeText(manageRst3.this, "통신오류..", Toast.LENGTH_LONG).show();

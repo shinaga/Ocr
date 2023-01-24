@@ -19,9 +19,6 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.messaging.FirebaseMessaging;
 
-import java.io.IOException;
-
-import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -111,7 +108,7 @@ public class MainActivity extends AppCompatActivity {
                 retrofitClient = RetrofitClient.getInstance();
                 loginAPI = RetrofitClient.getLoginAPI();
                 if(Userid.trim().length() == 0 || Userid == null || Userpw.trim().length() ==0 || Userpw == null){
-                    Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 다시 한번 확인해주세요!", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "아이디와 비밀번호를 확인해주세요.", Toast.LENGTH_LONG).show();
 
                 }else {
                     loginAPI.getLogin(loginDTO).enqueue(new Callback<LoginResponse>() {

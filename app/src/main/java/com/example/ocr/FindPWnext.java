@@ -81,7 +81,7 @@ public class FindPWnext extends AppCompatActivity {
                     alertDialog.show();
                 }else {
 
-                    com.example.ocr.findpwDTO findpwDTO = new com.example.ocr.findpwDTO(useremail, usernewpw);
+                    findpwDTO findpwDTO = new findpwDTO(useremail, usernewpw);
                     Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).build();
                     findpwAPI API = retrofit.create(findpwAPI.class);
                     Call<ResponseBody> call = API.getFINDpw(findpwDTO);
@@ -93,7 +93,7 @@ public class FindPWnext extends AppCompatActivity {
                                        String result = response.body().string();
                                     Log.d("findpwsuc", response.body().string());
                                     Toast.makeText(getApplicationContext(), "통신성공", Toast.LENGTH_SHORT).show();
-                                    Intent intent1 = new Intent(FindPWnext.this, com.example.ocr.MainActivity.class);
+                                    Intent intent1 = new Intent(FindPWnext.this, MainActivity.class);
                                     startActivity(intent1);
                                     FindPWnext.this.finish();
 

@@ -1,21 +1,25 @@
 package com.example.ocr;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class manageRst1 extends AppCompatActivity {
 
     Button btn_register2;
-    EditText usermanage, et_register2_userdepartment, et_username;
+    EditText et_username;
+    Spinner usermanage, et_register2_userdepartment;
+    String[] item = {"명지전문대학교", "데이터없음", "데이터없음", "데이터없음"};
+    String[] itemsub = {"소프트웨어콘텐츠과", "데이터없음", "데이터없음", "데이터없음"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,7 +32,16 @@ public class manageRst1 extends AppCompatActivity {
         et_register2_userdepartment = findViewById(R.id.userdepartment);
         et_username = findViewById(R.id.username);
 
-        et_register2_userdepartment.addTextChangedListener(new TextWatcher() {
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, item);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        usermanage.setAdapter(adapter);
+
+        ArrayAdapter<String> adapter1 = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, itemsub);
+        adapter1.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        et_register2_userdepartment.setAdapter(adapter1);
+
+
+        et_username.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
 
@@ -41,7 +54,11 @@ public class manageRst1 extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                btn_register2.setBackgroundColor(Color.parseColor("#9785CB"));
+                if(s.length() != 0) {
+                    btn_register2.setBackgroundResource(R.drawable.loginbackgrounddrawablebuttonemail);
+                }else {
+                    btn_register2.setBackgroundResource(R.drawable.loginbackgrounddrawablebutton);
+                }
             }
         });
 
@@ -50,13 +67,12 @@ public class manageRst1 extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                String userManage = usermanage.getText().toString();
-                String department = et_register2_userdepartment.getText().toString();
+
                 String username = et_username.getText().toString();
 
 
 
-                if(userManage.trim().length() == 0 || department.trim().length() == 0 || userManage == null || department == null || username.trim().length() == 0 || username == null){
+                if(username.trim().length() == 0 || username == null){
                     AlertDialog.Builder builder = new AlertDialog.Builder(manageRst1.this);
                     builder.setTitle("알림").setMessage("정보를 바르게 입력하시오.").setPositiveButton("확인", null).create().show();
                     AlertDialog alertDialog = builder.create();

@@ -56,27 +56,8 @@ public class HomeActivity extends AppCompatActivity {
         returnFragment = new ReturnFragment(this);
         getSupportFragmentManager().beginTransaction().replace(R.id.containers, homeFragment).commit();
 
-        NavigationBarView navigationBarView = findViewById(R.id.bottom_navigationview);
-        navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-
-                switch(item.getItemId()){
-                    case R.id.home:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, homeFragment).commit();
-                        return true;
-                    case R.id.rental:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, rentalFragment).commit();
-                        return true;
-                    case R.id.ret:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, loanFragment).commit();
-                        return true;
-                }
-                return false;
-            }
-        });
-        //NavigationBarView navigationBarView2 = findViewById(R.id.bottom_navigationview2);
-        //navigationBarView2.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+        //NavigationBarView navigationBarView = findViewById(R.id.bottom_navigationview);
+        //navigationBarView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
         //    @Override
         //    public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 //
@@ -90,13 +71,32 @@ public class HomeActivity extends AppCompatActivity {
         //            case R.id.ret:
         //                getSupportFragmentManager().beginTransaction().replace(R.id.containers, loanFragment).commit();
         //                return true;
-        //            case R.id.ret2:
-        //                getSupportFragmentManager().beginTransaction().replace(R.id.containers, returnFragment).commit();
-        //                return true;
         //        }
         //        return false;
         //    }
         //});
+        NavigationBarView navigationBarView2 = findViewById(R.id.bottom_navigationview2);
+        navigationBarView2.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
+            @Override
+            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//
+                switch(item.getItemId()){
+                    case R.id.home:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, homeFragment).commit();
+                        return true;
+                    case R.id.rental:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, rentalFragment).commit();
+                        return true;
+                    case R.id.ret:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, loanFragment).commit();
+                        return true;
+                    case R.id.ret2:
+                        getSupportFragmentManager().beginTransaction().replace(R.id.containers, returnFragment).commit();
+                        return true;
+                }
+                return false;
+            }
+        });
     }
 
     private void getEmail() {
@@ -146,7 +146,8 @@ public class HomeActivity extends AppCompatActivity {
                             try {
                                 String email="";
                                 email=inquireMyInfo.getString("user_email");
-
+                                email = email.replace("@",".at.");
+                                String finalEmail = email;
                                 FirebaseMessaging.getInstance().subscribeToTopic(email)
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
                                             @Override
@@ -154,10 +155,8 @@ public class HomeActivity extends AppCompatActivity {
                                                 String msg = "Subscribed";
                                                 if (!task.isSuccessful()) {
                                                     msg = "Subscribe failed";
-                                                } else {
-                                                    // 구독 요청 성공
                                                 }
-                                                Toast.makeText(HomeActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                                Toast.makeText(HomeActivity.this, msg+ finalEmail, Toast.LENGTH_SHORT).show();
                                             }
                                         });
                             } catch (Exception e) {
