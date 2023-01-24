@@ -4,12 +4,16 @@ import static android.content.ContentValues.TAG;
 
 import android.Manifest;
 import android.app.Activity;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
@@ -130,7 +134,6 @@ public class RentalFragment extends Fragment {
             }
         });
 
-        authority();
         img_camera = view.findViewById(R.id.img_camera);
         img_camera.setOnClickListener(v -> {
             new IntentIntegrator(getActivity()).initiateScan();
@@ -301,17 +304,6 @@ public class RentalFragment extends Fragment {
                 }
             }
         }.start();
-    }
-    private void authority(){
-        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            if(ActivityCompat.checkSelfPermission(getActivity(),Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(),Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
-                Log.d(TAG, "권한 설정 완료");
-            }
-            else {
-                Log.d(TAG, "권한 설정 요청");
-                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
-            }
-        }
     }
 
     @Override

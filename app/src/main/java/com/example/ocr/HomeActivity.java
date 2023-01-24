@@ -156,7 +156,7 @@ public class HomeActivity extends AppCompatActivity {
                                                 if (!task.isSuccessful()) {
                                                     msg = "Subscribe failed";
                                                 }
-                                                Toast.makeText(HomeActivity.this, msg+ finalEmail, Toast.LENGTH_SHORT).show();
+                                                //Toast.makeText(HomeActivity.this, msg+ finalEmail, Toast.LENGTH_SHORT).show();
                                             }
                                         });
                             } catch (Exception e) {

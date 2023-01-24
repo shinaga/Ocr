@@ -1,10 +1,20 @@
 package com.example.ocr;
 
+import static android.content.ContentValues.TAG;
+
+import android.Manifest;
+import android.app.Notification;
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.Context;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
+import android.os.Build;
 import android.os.Bundle;
 
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -87,9 +97,31 @@ public class HomeFragment extends Fragment{
             }
         });
         search();//검색 버튼 클릭
+        authority();//권한 설정
         return view;
     }
-
+    private void authority(){
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            NotificationManager notificationManager = (NotificationManager) fragmentActivity.getSystemService(Context.NOTIFICATION_SERVICE);
+            NotificationChannel notificationChannel = new NotificationChannel("channel_id", "channel_name", NotificationManager.IMPORTANCE_DEFAULT);
+            notificationChannel.setDescription("channel description");
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.GREEN);
+            notificationChannel.enableVibration(true);
+            notificationChannel.setVibrationPattern(new long[]{100, 200, 100, 200});
+            notificationChannel.setLockscreenVisibility(Notification.VISIBILITY_PRIVATE);
+            notificationManager.createNotificationChannel(notificationChannel);
+        }
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if(ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(getActivity(),Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+                Log.d(TAG, "권한 설정 완료");
+            }
+            else {
+                Log.d(TAG, "권한 설정 요청");
+                ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            }
+        }
+    }
     private void search() {
         ImageView img_search = view.findViewById(R.id.img_search);
         img_search.setOnClickListener(v -> {
