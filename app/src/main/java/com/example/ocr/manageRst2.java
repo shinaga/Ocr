@@ -40,7 +40,7 @@ public class manageRst2 extends AppCompatActivity {
     Spinner emailspiner;
     String itemresult;
     String beng = "@";
-    String[] emailreult = {"naver.com", "daum.net", "gmail.com"};
+    String[] emailreult = {"naver.com", "daum.net", "gmail.com","mjc.ac.kr"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

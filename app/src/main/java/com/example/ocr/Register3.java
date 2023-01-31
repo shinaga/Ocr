@@ -36,7 +36,7 @@ public class Register3 extends AppCompatActivity {
     Spinner emailspiner;
     String itemresult;
     String beng = "@";
-    String[] emailreult = {"naver.com", "daum.net", "gmail.com"};
+    String[] emailreult = {"naver.com", "daum.net", "gmail.com", "mjc.ac.kr"};
 
 
     String baseUrl = "http://120.142.105.189:5080/";

@@ -85,7 +85,13 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                login.setBackgroundColor(Color.parseColor("#9785CB"));
+
+
+                if(s.length() != 0) {
+                    login.setBackgroundResource(R.drawable.loginbackgrounddrawablebuttonemail);
+                }else {
+                    login.setBackgroundResource(R.drawable.loginbackgrounddrawablebutton);
+                }
             }
         });
 
