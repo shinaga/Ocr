@@ -49,7 +49,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         getEmail();
 
-        //ifMaster();//조교 또는 관리자 (필요 없어짐)
+        //ifMaster();//조교 또는 관리자, 필요 없어짐
         homeFragment = new HomeFragment(this);
         rentalFragment = new RentalFragment(this);
         loanFragment = new LoanFragment(this);
