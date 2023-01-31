@@ -166,7 +166,7 @@ public class Register3 extends AppCompatActivity {
                     intent.putExtra("userstudentid", userstudentid);
                     intent.putExtra("userphonenum", userphonenum);
                     intent.putExtra("useremail", usereamil);
-                    intent.putExtra("username", username);
+                   intent.putExtra("username", username);
 
                     startActivity(intent);
                 }

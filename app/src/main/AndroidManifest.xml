@@ -32,6 +32,15 @@
             </intent-filter>
         </service>
         <activity
+            android:name=".enterpriseRst1"
+            android:exported="false" />
+        <activity
+            android:name=".enterpriseRst2"
+            android:exported="false" />
+        <activity
+            android:name=".enterpriseRst3"
+            android:exported="false" />
+        <activity
             android:name=".TendinousActivity"
             android:exported="false" />
         <activity

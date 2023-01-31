@@ -1,7 +1,5 @@
 package com.example.ocr;
 
-import android.graphics.Bitmap;
-
 public class Equipment implements Comparable<Equipment>{
     public String name;//기자재 이름
     public String rental;//대여 가능, 불가능

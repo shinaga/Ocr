@@ -2,24 +2,18 @@ package com.example.ocr;
 
 import static android.content.ContentValues.TAG;
 
-import android.Manifest;
 import android.app.Activity;
-import android.app.Notification;
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.content.res.AssetManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Color;
 import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.media.ExifInterface;
 import android.net.Uri;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
@@ -34,21 +28,16 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.core.app.ActivityCompat;
 import androidx.core.content.FileProvider;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 
 import com.bumptech.glide.Glide;
 import com.google.zxing.integration.android.IntentIntegrator;
-import com.google.zxing.integration.android.IntentResult;
 import com.googlecode.tesseract.android.TessBaseAPI;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -61,15 +50,10 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.regex.Pattern;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
 
 public class RentalFragment extends Fragment {
     static FragmentActivity fragmentActivity;//getActivity()를 사용하기 위함
@@ -154,6 +138,7 @@ public class RentalFragment extends Fragment {
         btn_rental = view.findViewById(R.id.btn_rental);
     }
     static void loadEquipment(String tool_id) {
+        Toast.makeText(fragmentActivity,tool_id,Toast.LENGTH_SHORT).show();
         new Thread(){
             @Override
             public void run() {
@@ -255,6 +240,7 @@ public class RentalFragment extends Fragment {
                     connection.setDoInput(true);                // 읽기모드 지정
                     connection.setUseCaches(false);             // 캐싱데이터를 받을지 안받을지
                     connection.setConnectTimeout(15000);        // 통신 타임아웃a
+                    connection.setRequestProperty("token", MainActivity.token);
 
                     JSONObject body = new JSONObject();
                     body.put("tool_id", /*원래는 tool_id로 해야함*/tool_id);

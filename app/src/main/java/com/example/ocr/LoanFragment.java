@@ -13,7 +13,6 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -32,12 +31,6 @@ import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
-
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoanFragment extends Fragment {
     boolean flag = false;
@@ -222,14 +215,16 @@ public class LoanFragment extends Fragment {
                         }
                         in.close();
                     }
-                    JSONArray obj = new JSONArray(response.toString());// jsonData를 먼저 JSONArray 형태로 바꾼다.
+                    JSONObject obj = new JSONObject(response.toString());// jsonData를 먼저 JSONArray 형태로 바꾼다.
+                    JSONArray array = obj.getJSONArray("result");
+
                     getActivity().runOnUiThread(new Runnable() {//getActivity().을 붙여야 fragment에서 runOnUiThread가 작동함
                         @Override
                         public void run() {
-                            for(int i=0;i<obj.length();i++) {
+                            for(int i=0;i<array.length();i++) {
                                 try {
-                                    Log.d("test",obj.getString(i)+"");
-                                    JSONObject result = obj.getJSONObject(i);// boxOfficeResult의 JSONObject에서 "dailyBoxOfficeList"의 JSONArray 추출
+                                    Log.d("test",array.getString(i)+"");
+                                    JSONObject result = array.getJSONObject(i);// boxOfficeResult의 JSONObject에서 "dailyBoxOfficeList"의 JSONArray 추출
                                     JSONObject tool = result.getJSONObject("result");// boxOfficeResult의 JSONObject에서 "dailyBoxOfficeList"의 JSONArray 추출
 
                                     Equipment equipment = new Equipment();

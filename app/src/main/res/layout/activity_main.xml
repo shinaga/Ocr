@@ -7,18 +7,21 @@
     android:background="@drawable/loginbackground"
     tools:context=".MainActivity">
 
-    <TextView
+
+    <ImageView
         android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
         android:layout_gravity="center"
         android:gravity="center"
+        android:src="@drawable/rogo1"
         android:text="로고"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/userid"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.429"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintVertical_bias="0.429" />
 
     <EditText
         android:id="@+id/userid"
@@ -26,13 +29,14 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="12dp"
-        android:text=""
+
         android:background="@drawable/loginbackgrounddrawable"
         android:hint="아이디를 입력하시오"
         android:paddingHorizontal="10dp"
         android:paddingVertical="8dp"
         app:layout_constraintBottom_toTopOf="@+id/userpw"
         tools:layout_editor_absoluteX="9dp" />
+
     <EditText
         android:inputType="textPassword"
         android:id="@+id/userpw"
@@ -40,7 +44,6 @@
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="28dp"
-        android:text=""
         android:background="@drawable/loginbackgrounddrawable"
         android:hint="비밀번호를 입력하시오"
         android:paddingHorizontal="5dp"
@@ -58,6 +61,7 @@
         android:fontFamily="@font/notosanskrbold"
         android:text="다음"
         android:textColor="#ffffff"
+
         app:layout_constraintBottom_toBottomOf="parent"
         tools:layout_editor_absoluteX="20dp" />
 
@@ -94,4 +98,6 @@
         android:textColor="#ffffff"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_loginpage_login" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>

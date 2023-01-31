@@ -1,17 +1,15 @@
 package com.example.ocr;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationBarView;
@@ -49,7 +47,7 @@ public class HomeActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home);
         getEmail();
 
-        //ifMaster();//조교 또는 관리자, 필요 없어짐
+        //ifMaster();//조교 또는 관리자 (필요 없어짐)
         homeFragment = new HomeFragment(this);
         rentalFragment = new RentalFragment(this);
         loanFragment = new LoanFragment(this);
@@ -230,11 +228,12 @@ public class HomeActivity extends AppCompatActivity {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if(result != null){
             if(result.getContents() == null){
-                RentalFragment.makeOcr();//qr이 안되면 ocr로 한다.
+                if(flag==1)RentalFragment.makeOcr();//qr이 안되면 ocr로 한다.
+                else if(flag==2) ReturnFragment.makeOcr();
             }else {
                 String datas = "대여가능";
-                if(flag==1) RentalFragment.loadEquipment("20"+result.getContents());
-                else if(flag==2) ReturnFragment.loadEquipment("20"+result.getContents());
+                if(flag==1) RentalFragment.loadEquipment("2"+result.getContents());
+                else if(flag==2) ReturnFragment.loadEquipment("2"+result.getContents());
                 Req req = new Req(result.getContents(),datas);
                 retrofiyclient = Retrofiyclient.getInstance();
                 inter = Retrofiyclient.getInter();

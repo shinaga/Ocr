@@ -244,6 +244,7 @@ public class ReturnFragment extends Fragment {
                     connection.setDoInput(true);                // 읽기모드 지정
                     connection.setUseCaches(false);             // 캐싱데이터를 받을지 안받을지
                     connection.setConnectTimeout(15000);        // 통신 타임아웃a
+                    connection.setRequestProperty("token", MainActivity.token);
 
                     JSONObject body = new JSONObject();
                     body.put("tool_id", /*원래는 tool_id로 해야함*/tool_id);
