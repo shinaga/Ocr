@@ -7,12 +7,13 @@
     android:background="@drawable/loginbackground"
     tools:context=".Register">
 
-    <TextView
+    <ImageView
         android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
         android:layout_marginTop="160dp"
         android:text="로고"
+        android:src="@drawable/rogo1"
         android:textSize="30sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.498"

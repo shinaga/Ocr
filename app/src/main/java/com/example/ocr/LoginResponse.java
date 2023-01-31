@@ -1,6 +1,7 @@
 package com.example.ocr;
-
 import com.google.gson.annotations.SerializedName;
+
+import retrofit2.http.POST;
 
 public class LoginResponse {
 
@@ -14,7 +15,7 @@ public class LoginResponse {
     public Object token;
 
     public String toToken(){
-        return "TOKEN=" + token ;
+        return "SUC" + " " + suc + "TOKEN=" + token;
     }
 
 }
