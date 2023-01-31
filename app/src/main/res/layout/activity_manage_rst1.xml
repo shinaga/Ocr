@@ -8,24 +8,26 @@
     android:background="@drawable/loginbackground"
     tools:context=".ManagerRst.manageRst1">
 
-  <TextView
+  <ImageView
       android:id="@+id/textView"
-      android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_width="68dp"
+      android:layout_height="68dp"
       android:layout_gravity="center"
       android:gravity="center"
+      android:src="@drawable/rogo1"
       android:text="로고"
       android:textSize="30sp"
       app:layout_constraintBottom_toTopOf="@+id/usermanage"
+      app:layout_constraintEnd_toEndOf="parent"
+      app:layout_constraintStart_toStartOf="parent"
       app:layout_constraintTop_toTopOf="parent"
-      app:layout_constraintVertical_bias="0.429"
-      tools:layout_editor_absoluteX="0dp" />
+      app:layout_constraintVertical_bias="0.429" />
 
 
-  <EditText
+  <Spinner
       android:id="@+id/usermanage"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="40dp"
       android:layout_marginHorizontal="20dp"
       android:layout_marginBottom="12dp"
       android:background="@drawable/loginbackgrounddrawable"
@@ -35,11 +37,22 @@
       app:layout_constraintBottom_toTopOf="@+id/userdepartment"
       tools:layout_editor_absoluteX="16dp" />
 
-  <EditText
+  <ImageView
+      android:layout_width="15dp"
+      android:layout_height="10dp"
+      android:src="@drawable/vec"
+      app:layout_constraintBottom_toBottomOf="@+id/usermanage"
+      app:layout_constraintEnd_toEndOf="@+id/usermanage"
+      app:layout_constraintHorizontal_bias="0.969"
+      app:layout_constraintStart_toStartOf="@+id/usermanage"
+      app:layout_constraintTop_toTopOf="@+id/usermanage"
+      app:layout_constraintVertical_bias="0.533" />
+
+  <Spinner
 
       android:id="@+id/userdepartment"
       android:layout_width="match_parent"
-      android:layout_height="wrap_content"
+      android:layout_height="40dp"
       android:layout_marginHorizontal="20dp"
       android:layout_marginBottom="12dp"
       android:background="@drawable/loginbackgrounddrawable"
@@ -48,6 +61,16 @@
       android:paddingVertical="8dp"
       app:layout_constraintBottom_toTopOf="@+id/username"
       tools:layout_editor_absoluteX="20dp" />
+
+  <ImageView
+      android:layout_width="15dp"
+      android:layout_height="10dp"
+      android:src="@drawable/vec"
+      app:layout_constraintBottom_toBottomOf="@+id/userdepartment"
+      app:layout_constraintEnd_toEndOf="@+id/userdepartment"
+      app:layout_constraintHorizontal_bias="0.969"
+      app:layout_constraintStart_toStartOf="@+id/userdepartment"
+      app:layout_constraintTop_toTopOf="@+id/userdepartment" />
 
   <EditText
 

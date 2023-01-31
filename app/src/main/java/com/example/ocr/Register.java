@@ -7,9 +7,6 @@ import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.example.ocr.manageRst1;
-import com.example.ocr.enterpriseRst1;
-
 public class Register extends AppCompatActivity {
 
     ImageView img_student, img_register_enterprise, img_register_manager;
@@ -29,8 +26,11 @@ public class Register extends AppCompatActivity {
         img_student.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(Register.this, com.example.ocr.Register2.class);
+
+                Intent intent = new Intent(Register.this, Register2.class);
                 startActivity(intent);
+                img_student.setImageResource(R.drawable.studentafter);
+                finish();
 
             }
         });
@@ -40,6 +40,8 @@ public class Register extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Register.this, enterpriseRst1.class);
                 startActivity(intent);
+                img_register_enterprise.setImageResource(R.drawable.convertor);
+                finish();
             }
         });
 
@@ -48,6 +50,9 @@ public class Register extends AppCompatActivity {
             public void onClick(View v) {
                 Intent intent = new Intent(Register.this, manageRst1.class);
                 startActivity(intent);
+                img_register_manager.setImageResource(R.drawable.menigiment);
+                finish();
+
             }
         });
 

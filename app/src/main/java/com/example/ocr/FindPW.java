@@ -1,14 +1,16 @@
 package com.example.ocr;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -28,11 +30,16 @@ public class FindPW extends AppCompatActivity {
     private EditText userEmail, Emailnum;
     private Button findbtn;
 
-    private com.example.ocr.UserEmailAPI userEmailAPI;
+    private UserEmailAPI userEmailAPI;
     private Button btn_emailCertified;
+
+    private Spinner emailspiner;
 
     private String baseUrl = "http://120.142.105.189:5080/";
 
+    String itemresult;
+    String beng = "@";
+    String[] emailreult = {"naver.com", "daum.net", "gmail.com","mjc.ac.kr"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,10 +49,26 @@ public class FindPW extends AppCompatActivity {
         userEmail = findViewById(R.id.useremail);
         Emailnum = findViewById(R.id.emailnum);
 
+        emailspiner = findViewById(R.id.findpwemail);
 
         findbtn = findViewById(R.id.btn_idfind);
 
         btn_emailCertified = findViewById(R.id.emailcertifiedbtn);
+
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, emailreult);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        emailspiner.setAdapter(adapter);
+        emailspiner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                itemresult = emailreult[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         Emailnum.addTextChangedListener(new TextWatcher() {
             @Override
@@ -60,7 +83,11 @@ public class FindPW extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                findbtn.setBackgroundColor(Color.parseColor("#9785CB"));
+                if(s.length() != 0) {
+                    findbtn.setBackgroundResource(R.drawable.loginbackgrounddrawablebuttonemail);
+                }else {
+                    findbtn.setBackgroundResource(R.drawable.loginbackgrounddrawablebutton);
+                }
             }
         });
 
@@ -68,11 +95,11 @@ public class FindPW extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 //                Log.e("bibibic", v.toString());
-                String useremai = userEmail.getText().toString();
+                String useremai = userEmail.getText().toString() + beng + itemresult;
 
 //            emailDTO  = new EmailDTO(useremail);
                 Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).build();
-                userEmailAPI = retrofit.create(com.example.ocr.UserEmailAPI.class);
+                userEmailAPI = retrofit.create(UserEmailAPI.class);
                 Call<ResponseBody> call = userEmailAPI.getEmail(useremai);
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -100,7 +127,7 @@ public class FindPW extends AppCompatActivity {
         findbtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String useremail = userEmail.getText().toString();
+                String useremail = userEmail.getText().toString() + beng + itemresult;
                 String emailnum = Emailnum.getText().toString();
 
                 if(useremail.trim().length() == 0 || useremail == null || emailnum.trim().length() == 0 || emailnum == null) {
@@ -109,7 +136,7 @@ public class FindPW extends AppCompatActivity {
                     AlertDialog alertDialog = builder.create();
                     alertDialog.show();
                 }else {
-                    Intent intent = new Intent(FindPW.this, com.example.ocr.FindPWnext.class);
+                    Intent intent = new Intent(FindPW.this, FindPWnext.class);
                     intent.putExtra("useremail", useremail);
                     startActivity(intent);
                 }

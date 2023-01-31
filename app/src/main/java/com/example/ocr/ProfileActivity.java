@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -24,16 +25,24 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
 public class ProfileActivity extends AppCompatActivity {
     private RecyclerView recycler_rental,recycler_tendinous;
     private ArrayList<Equipment> equipmentList,equipmentList2;//리사이클러뷰에 넣어줄 기자재 리스트
     private EquipmentAdapter recyclerAdapter,recyclerAdapter2;
     TextView textView,text_department,text_phoneNumber,text_number,text_email;
+    static Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_profile);
 
+        context = getApplicationContext();
         textView = findViewById(R.id.textView);
         text_department = findViewById(R.id.text_department);
         text_phoneNumber = findViewById(R.id.text_phoneNumber);
@@ -49,7 +58,7 @@ public class ProfileActivity extends AppCompatActivity {
             Intent intent = new Intent(this, TendinousActivity.class);
             startActivity(intent);
         });
-        recyclerViewSet(3,4);//RecyclerView 세팅한다.
+        recyclerViewSet(2,1);//RecyclerView 세팅한다.
         loadEquipment();//서버에서 기자재 목록 불러오기
         loadEquipment2();//서버에서 기자재 목록 불러오기2
     }
@@ -200,10 +209,17 @@ public class ProfileActivity extends AppCompatActivity {
                                 JSONObject result = tool.getJSONObject("result");// jsonData를 먼저 JSONObject 형태로 바꾼다.
 
                                 equipment.name = result.getString("tool_name");
+                                equipment.rental = result.getString("tool_state");
                                 equipment.number = tool_id;
                                 equipment.code = result.getString("tool_use_division");
                                 equipment.purchase_date = result.getString("tool_purchase_date").substring(0,10);//문자열 자르기
                                 equipment.update_at = result.getString("tool_update_at").substring(0,10);//문자열 자르기;
+                                equipment.purchase_division = result.getString("tool_purchase_division");
+                                equipment.standard = result.getString("tool_standard");
+                                JSONObject image = tool.getJSONObject("image");// 이미지를 가져오기 위해
+                                if(image!=null){//image가 없으면 false임
+                                    equipment.url = image.getString("img_url");
+                                }
                                 if(type==1){
                                     equipmentList.add(equipment);
 
@@ -244,15 +260,14 @@ public class ProfileActivity extends AppCompatActivity {
                 try {
                     StringBuffer response = new StringBuffer();//여기에 json을 문자열로 받아올것임
 
-                    URL url = new URL("http://120.142.105.189:5080/rental/myAllRentalList/"+MainActivity.userid.getText().toString()+"/1");
+                    URL url = new URL("http://120.142.105.189:5080/rental/myCurrentRentalList/1");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-                    connection.setRequestProperty("content-type", "application/json");
+                    connection.setRequestProperty("Accept", "application/json");
                     connection.setRequestMethod("GET");         // 통신방식
                     connection.setDoInput(true);                // 읽기모드 지정
                     connection.setUseCaches(false);             // 캐싱데이터를 받을지 안받을지
                     connection.setConnectTimeout(15000);        // 통신 타임아웃
-                    //connection.setRequestProperty("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoic3NzIiwidXNlcl9saWNlbnNlIjozLCJleHAiOjE2NzMyNTg5OTksImlhdCI6MTY3MzIzNzM5OSwiaXNzIjoiYWVsaW1pIn0.AGa5ugl5Z2z4Fweh0hbOffRdXwgr2qO1SjP20PTRa6M");
-
+                    connection.setRequestProperty("token", MainActivity.token);
                     int responseCode = connection.getResponseCode();
 
                     if (responseCode == HttpURLConnection.HTTP_OK || responseCode == HttpURLConnection.HTTP_CREATED) {
@@ -273,22 +288,21 @@ public class ProfileActivity extends AppCompatActivity {
                         }
                         in.close();
                     }
-                    JSONObject obj = new JSONObject(response.toString());// jsonData를 먼저 JSONObject 형태로 바꾼다.
-                    JSONArray result = obj.getJSONArray("result");// boxOfficeResult의 JSONObject에서 "dailyBoxOfficeList"의 JSONArray 추출
-
+                    JSONArray obj = new JSONArray(response.toString());// jsonData를 먼저 JSONArray 형태로 바꾼다.
                     runOnUiThread(new Runnable() {//getActivity().을 붙여야 fragment에서 runOnUiThread가 작동함
                         @Override
                         public void run() {
-                            for(int i=0;!(i>result.length()||i>2);i++){
+                            for(int i=0;!(i>obj.length()||i>2);i++) {
                                 try {
-                                    JSONObject tool = result.getJSONObject(i);// result의 "i 번째"의 JSONObject를 추출
-                                    Equipment equipment = new Equipment();
+                                    JSONObject result = obj.getJSONObject(i);// boxOfficeResult의 JSONObject에서 "dailyBoxOfficeList"의 JSONArray 추출
+                                    JSONObject tool = result.getJSONObject("result");// boxOfficeResult의 JSONObject에서 "dailyBoxOfficeList"의 JSONArray 추출
 
-                                    JSONObject image = tool.getJSONObject("tool").getJSONObject("img");// 이미지를 가져오기 위해
-                                    if(image!=null){//image가 없으면 false임
-                                        equipment.url = image.getString("img_url");
-                                    }
-                                    Thread th = new Thread(new ThreadSee(equipment, tool.getJSONObject("tool").getString("tool_id"),1));//리사이클러뷰 아이템을 클릭했을때 표시할 정보를 가져오기 위한 클래스
+                                    Equipment equipment = new Equipment();
+                                    equipment.number = tool.getString("tool_id");
+                                    equipment.day = result.getString("D_day");
+                                    equipment.rental_id = tool.getString("rental_id");
+
+                                    Thread th = new Thread(new ThreadSee(equipment, equipment.number,1));//리사이클러뷰 아이템을 클릭했을때 표시할 정보를 가져오기 위한 클래스
                                     th.start();
                                     th.join();
                                 } catch (JSONException | InterruptedException e) {
@@ -307,6 +321,7 @@ public class ProfileActivity extends AppCompatActivity {
                 }
             }
         }.start();
+        recyclerAdapter.notifyDataSetChanged();
     }
     private void loadEquipment2() {
         new Thread(){
@@ -316,14 +331,14 @@ public class ProfileActivity extends AppCompatActivity {
                 try {
                     StringBuffer response = new StringBuffer();//여기에 json을 문자열로 받아올것임
 
-                    URL url = new URL("http://120.142.105.189:5080/repair/myRepairList/"+MainActivity.userid.getText().toString()+"/1");
+                    URL url = new URL("http://120.142.105.189:5080/repair/myRepairList/1");
                     HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     connection.setRequestProperty("content-type", "application/json");
                     connection.setRequestMethod("GET");         // 통신방식
                     connection.setDoInput(true);                // 읽기모드 지정
                     connection.setUseCaches(false);             // 캐싱데이터를 받을지 안받을지
                     connection.setConnectTimeout(15000);        // 통신 타임아웃
-                    //connection.setRequestProperty("token", "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyX2lkIjoic3NzIiwidXNlcl9saWNlbnNlIjozLCJleHAiOjE2NzMyNTg5OTksImlhdCI6MTY3MzIzNzM5OSwiaXNzIjoiYWVsaW1pIn0.AGa5ugl5Z2z4Fweh0hbOffRdXwgr2qO1SjP20PTRa6M");
+                    connection.setRequestProperty("token",MainActivity.token);
 
                     int responseCode = connection.getResponseCode();
 
@@ -356,10 +371,6 @@ public class ProfileActivity extends AppCompatActivity {
                                     JSONObject tool = result.getJSONObject(i);// result의 "i 번째"의 JSONObject를 추출
                                     Equipment equipment = new Equipment();
 
-                                    JSONObject image = tool.getJSONObject("tool").getJSONObject("img");// 이미지를 가져오기 위해
-                                    if(image!=null){//image가 없으면 false임
-                                        equipment.url = image.getString("img_url");
-                                    }
                                     Thread th = new Thread(new ThreadSee(equipment, tool.getJSONObject("tool").getString("tool_id"),2));//리사이클러뷰 아이템을 클릭했을때 표시할 정보를 가져오기 위한 클래스
                                     th.start();
                                     th.join();

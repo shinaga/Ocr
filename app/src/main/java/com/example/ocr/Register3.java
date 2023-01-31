@@ -1,14 +1,16 @@
 package com.example.ocr;
 
 import android.content.Intent;
-import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
@@ -31,10 +33,16 @@ public class Register3 extends AppCompatActivity {
     private EditText textView;
     private Button btn_emailCertified;
 
-    String baseUrl = "http://120.142.105.189:5080/";
-    private com.example.ocr.UserEmailAPI userEmailAPI;
+    Spinner emailspiner;
+    String itemresult;
+    String beng = "@";
+    String[] emailreult = {"naver.com", "daum.net", "gmail.com", "mjc.ac.kr"};
 
-    private  com.example.ocr.RetrofitClient retrofitClient;
+
+    String baseUrl = "http://120.142.105.189:5080/";
+    private UserEmailAPI userEmailAPI;
+
+    private RetrofitClient retrofitClient;
     private EmailDTO emailDTO;
     private UserEmailCerti userEmailCerti;
 
@@ -51,25 +59,47 @@ public class Register3 extends AppCompatActivity {
         btn_emailCertified = findViewById(R.id.emailcertifiedbtn);
        textView =findViewById(R.id.emailCertified);
 
+       emailspiner = findViewById(R.id.emailsub);
+
+
+
         Intent intent = getIntent();
 
 
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, emailreult);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        emailspiner.setAdapter(adapter);
+        emailspiner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                itemresult = emailreult[position];
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
 
-        et_studentid.addTextChangedListener(new TextWatcher() {
+        textView.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
+                btn_register3.setBackgroundResource(R.drawable.loginbackgrounddrawablebutton);
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-
+                btn_register3.setBackgroundResource(R.drawable.loginbackgrounddrawablebuttonemail);
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-                btn_register3.setBackgroundColor(Color.parseColor("#9785CB"));
+                if(s.length() != 0) {
+                    btn_register3.setBackgroundResource(R.drawable.loginbackgrounddrawablebuttonemail);
+                }else {
+                    btn_register3.setBackgroundResource(R.drawable.loginbackgrounddrawablebutton);
+                }
             }
 
 
@@ -82,11 +112,11 @@ public class Register3 extends AppCompatActivity {
             public void onClick(View v) {
 
 //                Log.e("bibibic", v.toString());
-                String useremail = et_useremail.getText().toString();
+                String useremail = et_useremail.getText().toString() + beng + itemresult ;
 
 //            emailDTO  = new EmailDTO(useremail);
                 Retrofit retrofit = new Retrofit.Builder().baseUrl(baseUrl).addConverterFactory(GsonConverterFactory.create()).build();
-                userEmailAPI = retrofit.create( com.example.ocr.UserEmailAPI.class);
+                userEmailAPI = retrofit.create(UserEmailAPI.class);
                 Call<ResponseBody> call = userEmailAPI.getEmail(useremail);
                 call.enqueue(new Callback<ResponseBody>() {
                     @Override
@@ -118,7 +148,7 @@ public class Register3 extends AppCompatActivity {
             public void onClick(View v) {
                 String userstudentid = et_studentid.getText().toString();
                 String userphonenum = et_phone.getText().toString();
-                String usereamil = et_useremail.getText().toString();
+                String usereamil = et_useremail.getText().toString() + beng + itemresult;
                 String username = intent.getStringExtra("username");
                 String userset = textView.getText().toString();
 
@@ -132,7 +162,7 @@ public class Register3 extends AppCompatActivity {
                     alertDialog.show();
                 }else{
 
-                    Intent intent = new Intent(Register3.this, com.example.ocr.Register4.class);
+                    Intent intent = new Intent(Register3.this, Register4.class);
                     intent.putExtra("userstudentid", userstudentid);
                     intent.putExtra("userphonenum", userphonenum);
                     intent.putExtra("useremail", usereamil);

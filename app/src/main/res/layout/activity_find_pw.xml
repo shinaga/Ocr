@@ -7,18 +7,20 @@
     android:background="@drawable/loginbackground"
     tools:context=".FindPW">
 
-    <TextView
+    <ImageView
         android:id="@+id/textView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="68dp"
+        android:layout_height="68dp"
         android:layout_gravity="center"
         android:gravity="center"
+        android:src="@drawable/rogo1"
         android:text="로고"
         android:textSize="30sp"
         app:layout_constraintBottom_toTopOf="@+id/useremail"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.429"
-        tools:layout_editor_absoluteX="0dp" />
+        app:layout_constraintVertical_bias="0.429" />
 
     <TextView
 
@@ -35,12 +37,12 @@
     <EditText
 
         android:id="@+id/useremail"
-        android:layout_width="250dp"
+        android:layout_width="120dp"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="20dp"
         android:layout_marginBottom="20dp"
         android:background="@drawable/loginbackgrounddrawable"
-        android:hint="이메일을 입력하시오."
+        android:hint="이메일."
         android:paddingHorizontal="10dp"
         android:paddingVertical="8dp"
         app:layout_constraintBottom_toTopOf="@+id/emailnum"
@@ -58,8 +60,40 @@
         android:textColor="#ffffff"
         app:layout_constraintBottom_toTopOf="@+id/emailnum"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.396"
+        app:layout_constraintHorizontal_bias="0.89"
         app:layout_constraintStart_toEndOf="@+id/useremail" />
+
+    <ImageView
+        android:id="@+id/imageView3"
+        android:layout_width="20dp"
+        android:layout_height="15dp"
+        android:layout_marginBottom="32dp"
+        android:src="@drawable/beng"
+        app:layout_constraintBottom_toTopOf="@+id/emailnum"
+        app:layout_constraintEnd_toStartOf="@+id/findpwemail"
+        app:layout_constraintHorizontal_bias="0.466"
+        app:layout_constraintStart_toEndOf="@+id/useremail" />
+
+    <Spinner
+        android:id="@+id/findpwemail"
+        android:layout_width="120dp"
+        android:layout_height="40dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginBottom="20dp"
+        android:background="@drawable/loginbackgrounddrawable"
+        app:layout_constraintBottom_toTopOf="@+id/emailnum"
+        app:layout_constraintEnd_toStartOf="@+id/emailcertifiedbtn" />
+
+    <ImageView
+        android:layout_width="15dp"
+        android:layout_height="10dp"
+        android:src="@drawable/vec"
+        app:layout_constraintBottom_toBottomOf="@+id/findpwemail"
+        app:layout_constraintEnd_toEndOf="@+id/findpwemail"
+        app:layout_constraintHorizontal_bias="0.895"
+        app:layout_constraintStart_toStartOf="@+id/findpwemail"
+        app:layout_constraintTop_toTopOf="@+id/findpwemail"
+        app:layout_constraintVertical_bias="0.433" />
 
     <EditText
 

@@ -8,6 +8,6 @@ import retrofit2.http.POST;
 public interface findpwAPI {
 
     @POST("user/changePw")
-    Call<ResponseBody> getFINDpw(@Body com.example.ocr.findpwDTO findpwDTO);
+    Call<ResponseBody> getFINDpw(@Body findpwDTO findpwDTO);
 
 }
