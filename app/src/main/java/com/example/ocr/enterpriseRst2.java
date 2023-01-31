@@ -49,7 +49,7 @@ public class enterpriseRst2 extends AppCompatActivity {
     Spinner emailspiner;
     String itemresult;
     String beng = "@";
-    String[] emailreult = {"naver.com", "daum.net", "gmail.com"};
+    String[] emailreult = {"naver.com", "daum.net", "gmail.com","mjc.ac.kr"};
 
 
     @Override
