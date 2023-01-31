@@ -15,7 +15,7 @@ public class LoginResponse {
     public Object token;
 
     public String toToken(){
-        return "TOKEN=" + token;
+        return "SUC" + " " + suc + "TOKEN=" + token;
     }
 
 }

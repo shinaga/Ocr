@@ -42,7 +42,7 @@ public class Register2 extends AppCompatActivity {
             }
 
             @Override
-            public void afterTextChanged(Editable s) {
+            public void afterTextChanged(Editable s){
                 btn_register2.setBackgroundColor(Color.parseColor("#9785CB"));
             }
         });

@@ -64,7 +64,11 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void afterTextChanged(Editable s) {
-                login.setBackgroundColor(Color.parseColor("#9785CB"));
+                if(s.length() != 0) {
+                    login.setBackgroundResource(R.drawable.loginbackgrounddrawablebuttonemail);
+                }else {
+                    login.setBackgroundResource(R.drawable.loginbackgrounddrawablebutton);
+                }
             }
         });
 
@@ -95,13 +99,16 @@ public class MainActivity extends AppCompatActivity {
                         public void onResponse(Call<LoginResponse> call, Response<LoginResponse> response) {
 
                             if(response.isSuccessful()){
-                                Toast.makeText(getApplicationContext(), "통신성공", Toast.LENGTH_LONG).show();
                                 String result = response.body().toToken();
                                 token=result.substring(13,result.length()-1);
 
                                 Log.e("test32",  token);
-                                Intent intent = new Intent(MainActivity.this,HomeActivity.class);
-                                startActivity(intent);
+                                if(token.length()>5){
+                                    token=result.substring(21,result.length()-1);
+                                    Intent intent = new Intent(MainActivity.this,HomeActivity.class);
+                                    startActivity(intent);
+                                }else
+                                    Toast.makeText(MainActivity.this, "아이디와 비밀번호를 다시 입력해 주세요.", Toast.LENGTH_SHORT).show();
 
                             }else {
                                 Toast.makeText(getApplicationContext(), "통신오류", Toast.LENGTH_LONG).show();

@@ -135,12 +135,12 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.View
                 long diffSec = (format1.getTime() - format2.getTime()) / 1000; //초 차이
                 long diffDays = diffSec / (24*60*60); //일자수 차이
                 if(i==2){
-                    if(diffDays<0)text_dday.setText("반납일이 지났습니다.");
+                    if(diffDays<0)text_dday.setText("");
                     else if(diffDays==0)text_dday.setText("TODAY");
                     else text_dday.setText("D - "+diffDays);
                 }
                 else if(i==3||i==4){
-                    if(diffDays<0)text_day.setText("반납일이 지났습니다.");
+                    if(diffDays<0)text_day.setText("");
                     else if(diffDays==0)text_day.setText("TODAY");
                     else text_day.setText("D - "+diffDays);
 
