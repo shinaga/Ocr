@@ -40,6 +40,7 @@ public class IDfind extends AppCompatActivity {
     String itemresult;
     String beng = "@";
     String[] emailreult = {"naver.com", "daum.net", "gmail.com","mjc.ac.kr"};
+    //주석
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
