@@ -35,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
+        //테스트
         tv_register = findViewById(R.id.tv_loginpage_register);
         idfind = findViewById(R.id.tv_loginpage_findid);
         pwfind = findViewById(R.id.tv_loginpage_findpw);
